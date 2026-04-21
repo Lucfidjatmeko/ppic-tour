@@ -157,8 +157,7 @@
   <div id="ov-wrap"><div class="load-wrap"><div class="spinner"></div><div class="load-txt">Memuat...</div></div></div>
   <div class="sec-title" style="font-size:18px;margin-bottom:14px">Hitung Mundur</div>
   <div class="countdown" id="countdown"></div>
-  <div class="sec-title" style="font-size:18px;margin-bottom:14px">Ringkasan Peserta</div>
-  <div id="ov-peserta"></div>
+  <div id="ov-extra"></div>
 </div>
 
 <!-- PESERTA -->
@@ -203,7 +202,7 @@
 
 <script>
 // ── APPS SCRIPT URL ── ganti dengan URL GAS tour Anda
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbxuiK1Z4Ud5OIei2f9TJ_4iTaz8uW_p1g5HpbwTMS6re1tV0BTcG9LqMK0BcjD-D-Mf/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbzy-H-N8dlO6752s-CUty9V3A0xv2EaD1tEs3XZ5OPE5gmlIySKTKrSw_QhZixiYr8j/exec';
 
 // ── DATA STATIS (langsung tampil tanpa Sheets) ────────────────
 // Bisa diganti dengan data dari GAS jika sudah tersedia
@@ -213,10 +212,17 @@ const TOUR_DATE = new Date('2026-09-26T07:00:00');
 const DATA = {
   info: {
     tanggal: '26–27 September 2026',
-    tujuan: 'Bandung & Lembang',
-    tema: 'Family Gathering PPIC & Warehouse',
-    pic: 'Lucfi Djatmeko'
+    tujuan:  'Bandung & Lembang',
+    tema:    'Family Gathering PPIC & Warehouse',
+    pic:     'Lucfi Djatmeko'
   },
+  summary: {
+    totalPeserta:0, totalDewasa:0, totalAnak:0, totalPax:0,
+    confirmed:0, confirmedPax:0, confirmedDewasa:0, confirmedAnak:0,
+    pending:0, declined:0
+  },
+  kaos: [],
+  transportasi: [],
 
   // ── PESERTA ─────────────────────────────────────────────────
   peserta: [
@@ -326,32 +332,50 @@ function renderCountdown(){
 
 // ── OVERVIEW ─────────────────────────────────────────────────
 function renderOverview(){
-  const totalPeserta=DATA.peserta.reduce((s,r)=>s+r.peserta,0);
-  const totalDewasa=DATA.peserta.reduce((s,r)=>s+r.dewasa,0);
-  const totalAnak=DATA.peserta.reduce((s,r)=>s+r.anak,0);
-  const totalPax=totalDewasa+totalAnak;
-  const totalBudget=DATA.budget.reduce((s,d)=>s+d.qty*d.price,0);
-  const busNeeded=Math.ceil(totalPax/50);
+  const sm = DATA.summary;
+  const totalPeserta = sm.totalPeserta || DATA.peserta.reduce((s,r)=>s+r.peserta,0);
+  const totalDewasa  = sm.totalDewasa  || DATA.peserta.reduce((s,r)=>s+r.dewasa,0);
+  const totalAnak    = sm.totalAnak    || DATA.peserta.reduce((s,r)=>s+r.anak,0);
+  const totalPax     = sm.totalPax     || (totalDewasa+totalAnak);
+  const confirmed    = sm.confirmed    || totalPeserta;
+  const confirmedPax = sm.confirmedPax || totalPax;
+  const pending      = sm.pending      || 0;
+  const declined     = sm.declined     || 0;
+  const totalBudget  = DATA.budget.reduce((s,d)=>s+d.qty*d.price,0);
+  const busNeeded    = Math.ceil(confirmedPax/50);
 
   document.getElementById('ov-wrap').innerHTML=`<div class="cards">
-    <div class="card"><div class="c-label">Total Peserta (Karyawan)</div><div class="c-val" style="color:var(--gold)">${totalPeserta}</div><div class="c-sub">${DATA.peserta.length} seksi</div></div>
-    <div class="card blue"><div class="c-label">Total Pax</div><div class="c-val">${totalPax}</div><div class="c-sub">${totalDewasa} dewasa · ${totalAnak} anak</div></div>
-    <div class="card green"><div class="c-label">Estimasi Budget</div><div class="c-val" style="font-size:15px">${fmtS(totalBudget)}</div><div class="c-sub">Rencana awal</div></div>
-    <div class="card orange"><div class="c-label">Bus Dibutuhkan</div><div class="c-val">${busNeeded}</div><div class="c-sub">Unit JB5 50-seat</div></div>
-    <div class="card red"><div class="c-label">Tanggal Tour</div><div class="c-val" style="font-size:14px">26–27 Sep</div><div class="c-sub">2026 · 2 hari 1 malam</div></div>
-    <div class="card purple"><div class="c-label">Destinasi</div><div class="c-val" style="font-size:14px">${DATA.info.tujuan}</div><div class="c-sub">TBD final</div></div>
+    <div class="card"><div class="c-label">Total Registrasi</div><div class="c-val" style="color:var(--gold)">${totalPeserta}</div><div class="c-sub">Karyawan terdaftar</div></div>
+    <div class="card green"><div class="c-label">Confirmed</div><div class="c-val">${confirmed}</div><div class="c-sub">${confirmedPax} pax ikut tour</div></div>
+    <div class="card orange"><div class="c-label">Pending</div><div class="c-val">${pending}</div><div class="c-sub">Belum konfirmasi</div></div>
+    <div class="card red"><div class="c-label">Declined</div><div class="c-val">${declined}</div><div class="c-sub">Tidak ikut</div></div>
+    <div class="card blue"><div class="c-label">Total Pax (Confirmed)</div><div class="c-val">${confirmedPax}</div><div class="c-sub">${sm.confirmedDewasa||totalDewasa} dewasa · ${sm.confirmedAnak||totalAnak} anak</div></div>
+    <div class="card"><div class="c-label">Estimasi Budget</div><div class="c-val" style="font-size:15px">${fmtS(totalBudget)}</div><div class="c-sub">${busNeeded} bus dibutuhkan</div></div>
   </div>`;
 
-  // Ringkasan peserta di overview
-  const byStatus=[
-    {lbl:'Confirmed',n:totalPeserta,cls:'pill-g'},
-    {lbl:'Pending',n:0,cls:'pill-o'},
-    {lbl:'Declined',n:0,cls:'pill-r'},
-  ];
-  document.getElementById('ov-peserta').innerHTML=`<div class="cards">
-    ${byStatus.map((s,i)=>`<div class="card" style="animation-delay:${i*.06}s"><div class="c-label">${s.lbl}</div><div class="c-val">${s.n}</div><div class="pill ${s.cls}">${s.lbl}</div></div>`).join('')}
-    <div class="card" style="animation-delay:.18s;border-top-color:var(--blue)"><div class="c-label">Deadline Registrasi</div><div class="c-val" style="font-size:14px">25 Apr 2026</div><div class="c-sub">Vendor submission</div></div>
-  </div>`;
+  // Kaos summary
+  let kaosHtml = '';
+  if(DATA.kaos?.length){
+    kaosHtml = `<div class="sec-title" style="font-size:18px;margin-bottom:14px">Rekap Ukuran Kaos</div>
+    <div class="cards">${DATA.kaos.map(k=>`<div class="card" style="text-align:center">
+      <div class="c-label">Ukuran ${k.ukuran}</div>
+      <div class="c-val" style="font-size:28px">${k.jumlah}</div>
+      <div class="c-sub">pcs</div>
+    </div>`).join('')}</div>`;
+  }
+
+  // Transportasi summary
+  let transHtml = '';
+  if(DATA.transportasi?.length){
+    transHtml = `<div class="sec-title" style="font-size:18px;margin-bottom:14px">Rekap Transportasi</div>
+    <div class="cards">${DATA.transportasi.map(t=>`<div class="card blue">
+      <div class="c-label">${t.jenis}</div>
+      <div class="c-val">${t.jumlah}</div>
+      <div class="c-sub">peserta</div>
+    </div>`).join('')}</div>`;
+  }
+
+  document.getElementById('ov-extra').innerHTML = kaosHtml + transHtml;
 
   renderCountdown();
   setInterval(renderCountdown,1000);
@@ -481,18 +505,6 @@ function renderItinerary(){
 }
 
 // ── LOAD FROM GAS ────────────────────────────────────────────
-function toNum(s){ return parseFloat(String(s).replace(/[^0-9.-]/g,''))||0; }
-
-function parseRows(rows){
-  if(!rows||rows.length<2) return [];
-  const headers=rows[0].map(h=>String(h).trim().toLowerCase());
-  return rows.slice(1).map(row=>{
-    const obj={};
-    headers.forEach((h,i)=>{ obj[h]=String(row[i]||'').trim(); });
-    return obj;
-  }).filter(r=>Object.values(r).some(v=>v!==''));
-}
-
 async function loadFromGAS(){
   setStatus('spin','Memuat data dari Google Sheets...');
   try {
@@ -500,63 +512,32 @@ async function loadFromGAS(){
     if(!res.ok) throw new Error('HTTP '+res.status);
     const json = await res.json();
 
-    // Parse Peserta
-    if(json.peserta?.length>1){
-      DATA.peserta = parseRows(json.peserta).map(r=>({
-        seksi:   r.seksi||'',
-        peserta: toNum(r.peserta),
-        dewasa:  toNum(r.dewasa),
-        anak:    toNum(r.anak),
-        status:  r.status||'Pending',
-        catatan: r.catatan||''
-      })).filter(r=>r.seksi);
-    }
+    // Summary langsung dari GAS
+    if(json.summary) Object.assign(DATA.summary, json.summary);
 
-    // Parse Budget
-    if(json.budget?.length>1){
-      DATA.budget = parseRows(json.budget).map(r=>({
-        cat:   r.cat||'',
-        item:  r.item||'',
-        qty:   toNum(r.qty),
-        price: toNum(r.price),
-        note:  r.note||''
-      })).filter(r=>r.item);
-    }
+    // Peserta per seksi
+    if(json.peserta?.length) DATA.peserta = json.peserta;
 
-    // Parse Vendor (group by nama)
-    if(json.vendor?.length>1){
-      const vrows = parseRows(json.vendor);
-      const vmap = {};
-      vrows.forEach(r=>{
-        if(!vmap[r.nama]) vmap[r.nama]={ nama:r.nama, type:r.type, status:r.status, detail:[] };
-        if(r.detail_key) vmap[r.nama].detail.push({ lbl:r.detail_key, val:r.detail_val });
-      });
-      DATA.vendor = Object.values(vmap);
-    }
+    // Budget (sudah dihitung di GAS pakai confirmed pax)
+    if(json.budget?.length) DATA.budget = json.budget;
 
-    // Parse Itinerary (group by day)
-    if(json.itinerary?.length>1){
-      const irows = parseRows(json.itinerary);
-      const imap = {};
-      irows.forEach(r=>{
-        if(!imap[r.day]) imap[r.day]={ day:r.day, items:[] };
-        imap[r.day].items.push({ time:r.time, title:r.title, sub:r.sub||'' });
-      });
-      DATA.itinerary = Object.values(imap);
-    }
+    // Vendor
+    if(json.vendor?.length) DATA.vendor = json.vendor;
 
-    // Parse Info
-    if(json.info?.length>1){
-      parseRows(json.info).forEach(r=>{ if(r.key) DATA.info[r.key]=r.value; });
-    }
+    // Itinerary
+    if(json.itinerary?.length) DATA.itinerary = json.itinerary;
+
+    // Kaos & transportasi
+    if(json.kaos?.length) DATA.kaos = json.kaos;
+    if(json.transportasi?.length) DATA.transportasi = json.transportasi;
 
     const now = new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'});
-    setStatus('ok','Live dari Google Sheets');
+    setStatus('ok','Live dari Google Sheets · Participant Data');
     document.getElementById('s-time').textContent='Update: '+now;
 
   } catch(e) {
     setStatus('err','Gagal memuat — pakai data lokal');
-    console.warn(e);
+    console.warn(e.message);
   }
   renderAll();
 }
