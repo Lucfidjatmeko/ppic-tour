@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tour Dashboard FY2026 — PAD PPIC & Warehouse</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --red:#C8102E;--red-light:#FF2B4A;--gold:#C9A84C;--gold-light:#F0C96A;
+    --black:#0D0D0D;--dark:#161616;--panel:#1E1E1E;--panel2:#252525;
+    --border:#2E2E2E;--text:#E8E8E8;--muted:#888;
+    --green:#2ECC71;--orange:#F39C12;--blue:#3498DB;--purple:#9B59B6;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:100%;overflow-x:hidden}
+  body{background:var(--black);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.5;min-height:100vh}
+
+  /* HEADER */
+  .header{background:var(--dark);border-bottom:2px solid var(--gold);padding:0 24px;display:flex;align-items:stretch;position:sticky;top:0;z-index:100}
+  .header-brand{display:flex;align-items:center;gap:14px;padding:13px 20px 13px 0;border-right:1px solid var(--border);margin-right:18px;flex-shrink:0}
+  .logo-box{width:36px;height:36px;background:var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:14px;color:var(--black);line-height:1;text-align:center}
+  .brand-text h1{font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:2px;color:white;line-height:1}
+  .brand-text p{font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
+  .nav-tabs{display:flex;align-items:center;flex:1;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .nav-tabs::-webkit-scrollbar{display:none}
+  .nav-tab{padding:10px 15px;border:none;background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .2s;white-space:nowrap;flex-shrink:0}
+  .nav-tab:hover{color:var(--text)}.nav-tab.active{color:var(--gold-light);border-bottom-color:var(--gold)}
+  .fy-badge{margin-left:auto;align-self:center;background:var(--gold);color:var(--black);font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:2px;padding:4px 12px;border-radius:2px;flex-shrink:0}
+
+  /* STATUS BAR */
+  .status-bar{display:flex;align-items:center;gap:8px;padding:7px 24px;background:var(--panel2);border-bottom:1px solid var(--border);font-size:11px}
+  .s-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--orange)}
+  .s-dot.ok{background:var(--green)}.s-dot.err{background:#FF6B6B}
+  .s-dot.spin{background:var(--orange);animation:blink .8s infinite}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+  .s-text{color:var(--muted)}.s-time{margin-left:auto;color:var(--border);font-family:'DM Mono',monospace;font-size:10px}
+
+  /* PAGES */
+  .page{display:none;padding:24px;max-width:1300px;margin:0 auto;width:100%}.page.active{display:block}
+  .sec-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;color:white;display:flex;align-items:center;gap:10px;margin-bottom:18px}
+  .sec-title::before{content:'';display:block;width:4px;height:22px;background:var(--gold);flex-shrink:0}
+
+  /* CARDS */
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:26px}
+  .card{background:var(--panel);border:1px solid var(--border);border-top:3px solid var(--gold);padding:16px;animation:fadeUp .4s ease both}
+  .card.red{border-top-color:var(--red)}.card.blue{border-top-color:var(--blue)}.card.green{border-top-color:var(--green)}.card.purple{border-top-color:var(--purple)}.card.orange{border-top-color:var(--orange)}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+  .c-label{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:5px}
+  .c-val{font-family:'DM Mono',monospace;font-size:20px;color:white;margin-bottom:3px}
+  .c-sub{font-size:11px;color:var(--muted)}
+  .pill{display:inline-block;font-size:11px;padding:2px 8px;border-radius:20px;font-weight:600;margin-top:5px}
+  .pill-g{background:rgba(46,204,113,.15);color:var(--green)}
+  .pill-r{background:rgba(200,16,46,.15);color:#FF6B6B}
+  .pill-o{background:rgba(243,156,18,.15);color:var(--orange)}
+  .pill-b{background:rgba(52,152,219,.15);color:var(--blue)}
+  .pill-gold{background:rgba(201,168,76,.15);color:var(--gold)}
+  .pbar-bg{background:var(--border);height:6px;border-radius:3px;overflow:hidden;margin-top:8px}
+  .pbar-fill{height:100%;border-radius:3px;transition:width 1s ease}
+
+  /* COUNTDOWN */
+  .countdown{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:26px}
+  .cd-box{background:var(--panel);border:1px solid var(--border);padding:16px;text-align:center}
+  .cd-num{font-family:'Bebas Neue',sans-serif;font-size:42px;color:var(--gold);line-height:1}
+  .cd-lbl{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-top:4px}
+
+  /* TABLES */
+  .tbl-wrap{overflow-x:auto;margin-bottom:26px;-webkit-overflow-scrolling:touch}
+  table{width:100%;border-collapse:collapse;min-width:400px}
+  thead th{background:var(--panel2);padding:9px 12px;text-align:left;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);font-weight:500}
+  tbody tr{border-bottom:1px solid var(--border);transition:background .15s}
+  tbody tr:hover{background:rgba(255,255,255,.025)}
+  tbody td{padding:9px 12px;font-size:13px}
+  .tn{font-family:'DM Mono',monospace;text-align:right}
+  .cat-row td{background:var(--panel2);font-family:'Bebas Neue',sans-serif;font-size:12px;letter-spacing:1.5px;color:var(--gold);padding:7px 12px}
+  .tot-row td{background:rgba(201,168,76,.06);font-weight:600;font-family:'DM Mono',monospace;border-top:1px solid rgba(201,168,76,.2)}
+
+  /* VENDOR CARDS */
+  .vendor-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:26px}
+  .vendor-card{background:var(--panel);border:1px solid var(--border);padding:20px}
+  .vendor-card h3{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;color:var(--gold);margin-bottom:4px}
+  .vendor-type{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:14px}
+  .vendor-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:13px}
+  .vendor-row:last-child{border-bottom:none}
+  .vendor-row .lbl{color:var(--muted)}
+  .vendor-row .val{font-family:'DM Mono',monospace;font-weight:600}
+  .vendor-status{display:inline-block;font-size:10px;padding:3px 10px;border-radius:20px;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-top:12px}
+  .vs-open{background:rgba(243,156,18,.15);color:var(--orange)}
+  .vs-confirm{background:rgba(46,204,113,.15);color:var(--green)}
+  .vs-nego{background:rgba(52,152,219,.15);color:var(--blue)}
+
+  /* ITINERARY */
+  .itin-wrap{display:flex;flex-direction:column;gap:0;margin-bottom:26px}
+  .itin-day{background:var(--panel2);padding:10px 16px;font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:2px;color:var(--gold);border-left:4px solid var(--gold)}
+  .itin-item{display:grid;grid-template-columns:80px 1fr;gap:0;border-bottom:1px solid var(--border)}
+  .itin-time{padding:12px 16px;font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);border-right:1px solid var(--border);display:flex;align-items:center}
+  .itin-detail{padding:12px 16px}
+  .itin-title{font-size:13px;font-weight:600;color:var(--text)}
+  .itin-sub{font-size:11px;color:var(--muted);margin-top:2px}
+
+  /* PESERTA SUMMARY */
+  .peserta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:26px}
+  .peserta-card{background:var(--panel);border:1px solid var(--border);padding:18px}
+  .peserta-card h3{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:2px;color:var(--gold);margin-bottom:12px;border-bottom:1px solid var(--border);padding-bottom:8px}
+  .peserta-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:13px}
+  .peserta-row .lbl{color:var(--muted)}
+  .peserta-n{font-family:'DM Mono',monospace;font-weight:600}
+  .peserta-tot{display:flex;justify-content:space-between;padding:10px 0 0;margin-top:8px;border-top:1px solid var(--border);font-weight:600}
+  .peserta-tot .peserta-n{color:var(--gold);font-size:18px}
+
+  /* LOAD/ERR */
+  .load-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 0;gap:14px}
+  .spinner{width:30px;height:30px;border:3px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .load-txt{font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:3px;color:var(--muted)}
+  .err-wrap{text-align:center;padding:40px;color:var(--muted);font-size:13px;line-height:2.2}
+
+  footer{text-align:center;padding:20px;color:var(--border);font-size:11px;letter-spacing:1px;border-top:1px solid var(--border);margin-top:28px}
+
+  @media(max-width:580px){
+    .page{padding:14px}.header{padding:0 12px}.status-bar{padding:7px 12px}
+    .brand-text p{display:none}.nav-tab{padding:10px 10px;font-size:12px}
+    .cards{grid-template-columns:1fr 1fr}.countdown{grid-template-columns:repeat(4,1fr)}
+    .cd-num{font-size:28px}
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-brand">
+    <div class="logo-box">TOUR</div>
+    <div class="brand-text">
+      <h1>Tour Dashboard</h1>
+      <p>Plant Administration Division - Manufacturing &amp; PE Directorate</p>
+    </div>
+  </div>
+  <nav class="nav-tabs">
+    <button class="nav-tab active" onclick="showPage('overview',this)">Overview</button>
+    <button class="nav-tab" onclick="showPage('peserta',this)">Peserta</button>
+    <button class="nav-tab" onclick="showPage('budget',this)">Budget</button>
+    <button class="nav-tab" onclick="showPage('vendor',this)">Vendor</button>
+    <button class="nav-tab" onclick="showPage('itinerary',this)">Itinerary</button>
+  </nav>
+  <div class="fy-badge">SEP 2026</div>
+</header>
+
+<div class="status-bar">
+  <div class="s-dot spin" id="s-dot"></div>
+  <span class="s-text" id="s-text">Memuat data...</span>
+  <span class="s-time" id="s-time"></span>
+</div>
+
+<!-- OVERVIEW -->
+<div class="page active" id="page-overview">
+  <div class="sec-title">Overview Tour</div>
+  <div id="ov-wrap"><div class="load-wrap"><div class="spinner"></div><div class="load-txt">Memuat...</div></div></div>
+  <div class="sec-title" style="font-size:18px;margin-bottom:14px">Hitung Mundur</div>
+  <div class="countdown" id="countdown"></div>
+  <div class="sec-title" style="font-size:18px;margin-bottom:14px">Ringkasan Peserta</div>
+  <div id="ov-peserta"></div>
+</div>
+
+<!-- PESERTA -->
+<div class="page" id="page-peserta">
+  <div class="sec-title">Data Peserta</div>
+  <div class="peserta-grid" id="peserta-grid"></div>
+  <div class="sec-title" style="font-size:18px;margin-bottom:14px">Detail per Seksi</div>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Seksi</th><th class="tn">Peserta</th><th class="tn">Pax Dewasa</th><th class="tn">Pax Anak</th><th class="tn">Total Pax</th><th>Status</th></tr></thead>
+    <tbody id="peserta-tbl"></tbody>
+  </table></div>
+</div>
+
+<!-- BUDGET -->
+<div class="page" id="page-budget">
+  <div class="sec-title">Budget Tour</div>
+  <div class="cards" id="bgt-cards"></div>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Item</th><th class="tn">Qty</th><th class="tn">Harga Satuan</th><th class="tn">Total</th><th>Catatan</th></tr></thead>
+    <tbody id="bgt-tbl"></tbody>
+  </table></div>
+</div>
+
+<!-- VENDOR -->
+<div class="page" id="page-vendor">
+  <div class="sec-title">Data Vendor</div>
+  <div class="vendor-grid" id="vendor-grid"></div>
+  <div class="sec-title" style="font-size:18px;margin-bottom:14px">Spesifikasi Teknis</div>
+  <div class="tbl-wrap"><table>
+    <thead><tr><th>Item</th><th>Spesifikasi</th><th>Keterangan</th></tr></thead>
+    <tbody id="spec-tbl"></tbody>
+  </table></div>
+</div>
+
+<!-- ITINERARY -->
+<div class="page" id="page-itinerary">
+  <div class="sec-title">Itinerary Tour</div>
+  <div class="itin-wrap" id="itin-wrap"></div>
+</div>
+
+<footer>Tour Dashboard FY2026 &middot; Plant Administration Division &middot; 26–27 September 2026</footer>
+
+<script>
+// ── APPS SCRIPT URL ── ganti dengan URL GAS tour Anda
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbxuiK1Z4Ud5OIei2f9TJ_4iTaz8uW_p1g5HpbwTMS6re1tV0BTcG9LqMK0BcjD-D-Mf/exec';
+
+// ── DATA STATIS (langsung tampil tanpa Sheets) ────────────────
+// Bisa diganti dengan data dari GAS jika sudah tersedia
+
+const TOUR_DATE = new Date('2026-09-26T07:00:00');
+
+const DATA = {
+  info: {
+    tanggal: '26–27 September 2026',
+    tujuan: 'Bandung & Lembang',
+    tema: 'Family Gathering PPIC & Warehouse',
+    pic: 'Lucfi Djatmeko'
+  },
+
+  // ── PESERTA ─────────────────────────────────────────────────
+  peserta: [
+    { seksi:'CCR & Ordering NR Engine', peserta:14, dewasa:20, anak:8 },
+    { seksi:'PPIC Plant 1',             peserta:10, dewasa:15, anak:5 },
+    { seksi:'PPIC Plant 2',             peserta:10, dewasa:14, anak:4 },
+    { seksi:'Warehouse Plant 1',        peserta:12, dewasa:18, anak:6 },
+    { seksi:'Warehouse Plant 2',        peserta:12, dewasa:16, anak:5 },
+    { seksi:'Logistic',                 peserta:8,  dewasa:10, anak:3 },
+    { seksi:'PAD Admin & Support',      peserta:6,  dewasa:8,  anak:2 },
+  ],
+
+  // ── BUDGET ──────────────────────────────────────────────────
+  budget: [
+    { cat:'Transportasi', item:'Bus JB5 Single Glass Elegan 50-seat', qty:2, price:7000000, note:'Rp7jt/unit' },
+    { cat:'Transportasi', item:'BBM & Tol',                            qty:1, price:1500000, note:'Estimasi' },
+    { cat:'Akomodasi',    item:'Hotel min bintang 3 (Dewasa)',          qty:72, price:350000, note:'Rp350k/pax' },
+    { cat:'Akomodasi',    item:'Hotel (Anak <12)',                      qty:26, price:300000, note:'Rp300k/pax' },
+    { cat:'Konsumsi',     item:'Makan 3x (include hotel)',              qty:1,  price:0,      note:'Include paket hotel' },
+    { cat:'Acara',        item:'Outbound / Games',                      qty:1,  price:3000000, note:'Estimasi' },
+    { cat:'Acara',        item:'Doorprize & Hadiah',                    qty:1,  price:2000000, note:'Estimasi' },
+    { cat:'Acara',        item:'Dokumentasi / Fotografer',              qty:1,  price:1500000, note:'Estimasi' },
+    { cat:'Lain-lain',    item:'Kaos Peserta',                          qty:98, price:85000,  note:'Estimasi' },
+    { cat:'Lain-lain',    item:'Biaya Tak Terduga',                     qty:1,  price:2000000, note:'Buffer 5%' },
+  ],
+
+  // ── VENDOR ──────────────────────────────────────────────────
+  vendor: [
+    {
+      nama:'TBD — Open Bidding Bus',
+      type:'Transportasi',
+      status:'open',
+      detail:[
+        {lbl:'Tipe',  val:'JB5 Single Glass Elegan'},
+        {lbl:'Kapasitas', val:'50 seat / unit'},
+        {lbl:'Jumlah', val:'2 unit'},
+        {lbl:'Budget', val:'Rp7.000.000 / unit'},
+        {lbl:'Deadline', val:'25 April 2026'},
+      ]
+    },
+    {
+      nama:'TBD — Open Bidding Hotel',
+      type:'Akomodasi',
+      status:'open',
+      detail:[
+        {lbl:'Minimum', val:'Bintang 3'},
+        {lbl:'Kapasitas', val:'4 pax / kamar'},
+        {lbl:'Tarif Dewasa', val:'Rp350.000 / pax'},
+        {lbl:'Tarif Anak <12', val:'Rp300.000 / pax'},
+        {lbl:'Meals', val:'3x makan'},
+        {lbl:'Deadline', val:'25 April 2026'},
+      ]
+    },
+  ],
+
+  // ── ITINERARY ────────────────────────────────────────────────
+  itinerary: [
+    { day:'Hari 1 — Sabtu, 26 September 2026', items:[
+      { time:'05.30', title:'Kumpul & Briefing', sub:'Area parkir TMMIN Karawang' },
+      { time:'06.00', title:'Keberangkatan', sub:'Karawang → Bandung via Tol Cipularang' },
+      { time:'09.00', title:'Tiba di Lokasi', sub:'Check-in hotel / penginapan' },
+      { time:'10.00', title:'Outbound & Games', sub:'Family games, lomba, ice breaking' },
+      { time:'12.00', title:'Makan Siang', sub:'Prasmanan bersama' },
+      { time:'13.00', title:'Free Program', sub:'Wisata / aktivitas keluarga' },
+      { time:'17.00', title:'Kembali ke Hotel', sub:'Istirahat & bebas' },
+      { time:'19.00', title:'Makan Malam', sub:'Gala dinner & hiburan' },
+      { time:'21.00', title:'Istirahat', sub:'' },
+    ]},
+    { day:'Hari 2 — Minggu, 27 September 2026', items:[
+      { time:'06.00', title:'Sarapan', sub:'' },
+      { time:'07.00', title:'Check-out', sub:'Persiapan kepulangan' },
+      { time:'08.00', title:'Wisata Pagi', sub:'Destinasi lokal (TBD)' },
+      { time:'11.00', title:'Makan Siang', sub:'' },
+      { time:'12.00', title:'Keberangkatan Pulang', sub:'Bandung → Karawang' },
+      { time:'15.00', title:'Tiba di Karawang', sub:'Estimasi (tergantung lalu lintas)' },
+    ]},
+  ]
+};
+
+// ── HELPERS ──────────────────────────────────────────────────
+const fmt  = n => 'Rp'+Math.round(n||0).toLocaleString('id-ID');
+const fmtS = n => { n=n||0; return n>=1000000?'Rp'+(n/1000000).toFixed(1)+'jt':n>=1000?'Rp'+(n/1000).toFixed(0)+'rb':'Rp'+n; };
+
+function setStatus(state,msg){
+  const dot=document.getElementById('s-dot'),txt=document.getElementById('s-text');
+  dot.className='s-dot'+(state==='ok'?' ok':state==='err'?' err':' spin');
+  txt.textContent=msg;
+}
+
+function showPage(name,el){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  el.classList.add('active');
+}
+
+// ── COUNTDOWN ────────────────────────────────────────────────
+function renderCountdown(){
+  const now=new Date(), diff=TOUR_DATE-now;
+  if(diff<=0){ document.getElementById('countdown').innerHTML='<div style="grid-column:1/-1;text-align:center;font-family:Bebas Neue,sans-serif;font-size:24px;letter-spacing:3px;color:var(--gold)">Tour sudah dilaksanakan!</div>'; return; }
+  const d=Math.floor(diff/86400000),h=Math.floor((diff%86400000)/3600000),m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);
+  document.getElementById('countdown').innerHTML=
+    [['Hari',d],['Jam',h],['Menit',m],['Detik',s]].map(([lbl,val])=>
+      `<div class="cd-box"><div class="cd-num">${String(val).padStart(2,'0')}</div><div class="cd-lbl">${lbl}</div></div>`
+    ).join('');
+}
+
+// ── OVERVIEW ─────────────────────────────────────────────────
+function renderOverview(){
+  const totalPeserta=DATA.peserta.reduce((s,r)=>s+r.peserta,0);
+  const totalDewasa=DATA.peserta.reduce((s,r)=>s+r.dewasa,0);
+  const totalAnak=DATA.peserta.reduce((s,r)=>s+r.anak,0);
+  const totalPax=totalDewasa+totalAnak;
+  const totalBudget=DATA.budget.reduce((s,d)=>s+d.qty*d.price,0);
+  const busNeeded=Math.ceil(totalPax/50);
+
+  document.getElementById('ov-wrap').innerHTML=`<div class="cards">
+    <div class="card"><div class="c-label">Total Peserta (Karyawan)</div><div class="c-val" style="color:var(--gold)">${totalPeserta}</div><div class="c-sub">${DATA.peserta.length} seksi</div></div>
+    <div class="card blue"><div class="c-label">Total Pax</div><div class="c-val">${totalPax}</div><div class="c-sub">${totalDewasa} dewasa · ${totalAnak} anak</div></div>
+    <div class="card green"><div class="c-label">Estimasi Budget</div><div class="c-val" style="font-size:15px">${fmtS(totalBudget)}</div><div class="c-sub">Rencana awal</div></div>
+    <div class="card orange"><div class="c-label">Bus Dibutuhkan</div><div class="c-val">${busNeeded}</div><div class="c-sub">Unit JB5 50-seat</div></div>
+    <div class="card red"><div class="c-label">Tanggal Tour</div><div class="c-val" style="font-size:14px">26–27 Sep</div><div class="c-sub">2026 · 2 hari 1 malam</div></div>
+    <div class="card purple"><div class="c-label">Destinasi</div><div class="c-val" style="font-size:14px">${DATA.info.tujuan}</div><div class="c-sub">TBD final</div></div>
+  </div>`;
+
+  // Ringkasan peserta di overview
+  const byStatus=[
+    {lbl:'Confirmed',n:totalPeserta,cls:'pill-g'},
+    {lbl:'Pending',n:0,cls:'pill-o'},
+    {lbl:'Declined',n:0,cls:'pill-r'},
+  ];
+  document.getElementById('ov-peserta').innerHTML=`<div class="cards">
+    ${byStatus.map((s,i)=>`<div class="card" style="animation-delay:${i*.06}s"><div class="c-label">${s.lbl}</div><div class="c-val">${s.n}</div><div class="pill ${s.cls}">${s.lbl}</div></div>`).join('')}
+    <div class="card" style="animation-delay:.18s;border-top-color:var(--blue)"><div class="c-label">Deadline Registrasi</div><div class="c-val" style="font-size:14px">25 Apr 2026</div><div class="c-sub">Vendor submission</div></div>
+  </div>`;
+
+  renderCountdown();
+  setInterval(renderCountdown,1000);
+}
+
+// ── PESERTA ──────────────────────────────────────────────────
+function renderPeserta(){
+  const totalP=DATA.peserta.reduce((s,r)=>s+r.peserta,0);
+  const totalD=DATA.peserta.reduce((s,r)=>s+r.dewasa,0);
+  const totalA=DATA.peserta.reduce((s,r)=>s+r.anak,0);
+  const totalPax=totalD+totalA;
+
+  document.getElementById('peserta-grid').innerHTML=`
+    <div class="peserta-card"><h3>Rekapitulasi Pax</h3>
+      <div class="peserta-row"><span class="lbl">Total Karyawan</span><span class="peserta-n">${totalP}</span></div>
+      <div class="peserta-row"><span class="lbl">Pax Dewasa</span><span class="peserta-n">${totalD}</span></div>
+      <div class="peserta-row"><span class="lbl">Pax Anak (&lt;12)</span><span class="peserta-n">${totalA}</span></div>
+      <div class="peserta-tot"><span>Total Pax</span><span class="peserta-n">${totalPax}</span></div>
+    </div>
+    <div class="peserta-card"><h3>Kebutuhan Bus</h3>
+      <div class="peserta-row"><span class="lbl">Total pax</span><span class="peserta-n">${totalPax}</span></div>
+      <div class="peserta-row"><span class="lbl">Kapasitas/bus</span><span class="peserta-n">50</span></div>
+      <div class="peserta-row"><span class="lbl">Utilisasi</span><span class="peserta-n">${Math.round(totalPax/Math.ceil(totalPax/50)/50*100)}%</span></div>
+      <div class="peserta-tot"><span>Bus Dibutuhkan</span><span class="peserta-n">${Math.ceil(totalPax/50)}</span></div>
+    </div>
+    <div class="peserta-card"><h3>Kebutuhan Kamar</h3>
+      <div class="peserta-row"><span class="lbl">4 pax / kamar</span><span class="peserta-n">${Math.ceil(totalPax/4)}</span></div>
+      <div class="peserta-row"><span class="lbl">Pax dewasa</span><span class="peserta-n">${totalD}</span></div>
+      <div class="peserta-row"><span class="lbl">Pax anak</span><span class="peserta-n">${totalA}</span></div>
+      <div class="peserta-tot"><span>Est. Kamar</span><span class="peserta-n">${Math.ceil(totalPax/4)}</span></div>
+    </div>`;
+
+  let h='';
+  DATA.peserta.forEach(r=>{
+    const pax=r.dewasa+r.anak;
+    h+=`<tr>
+      <td>${r.seksi}</td>
+      <td class="tn">${r.peserta}</td>
+      <td class="tn">${r.dewasa}</td>
+      <td class="tn">${r.anak}</td>
+      <td class="tn" style="color:var(--gold)">${pax}</td>
+      <td><span class="pill pill-g">Confirmed</span></td>
+    </tr>`;
+  });
+  h+=`<tr class="tot-row">
+    <td>TOTAL</td>
+    <td class="tn">${totalP}</td>
+    <td class="tn">${totalD}</td>
+    <td class="tn">${totalA}</td>
+    <td class="tn" style="color:var(--gold)">${totalPax}</td>
+    <td></td>
+  </tr>`;
+  document.getElementById('peserta-tbl').innerHTML=h;
+}
+
+// ── BUDGET ───────────────────────────────────────────────────
+function renderBudget(){
+  const total=DATA.budget.reduce((s,d)=>s+d.qty*d.price,0);
+  const cats=[...new Set(DATA.budget.map(d=>d.cat))];
+  const bycat={};
+  cats.forEach(c=>{ bycat[c]=DATA.budget.filter(d=>d.cat===c).reduce((s,d)=>s+d.qty*d.price,0); });
+  const biggest=Object.entries(bycat).sort((a,b)=>b[1]-a[1])[0];
+
+  document.getElementById('bgt-cards').innerHTML=`
+    <div class="card"><div class="c-label">Total Budget</div><div class="c-val" style="font-size:16px">${fmt(total)}</div><div class="c-sub">Estimasi awal</div></div>
+    <div class="card blue"><div class="c-label">Per Karyawan</div><div class="c-val" style="font-size:16px">${fmt(Math.round(total/DATA.peserta.reduce((s,r)=>s+r.peserta,0)))}</div><div class="c-sub">Estimasi kontribusi</div></div>
+    <div class="card orange"><div class="c-label">Terbesar</div><div class="c-val" style="font-size:14px">${biggest[0]}</div><div class="c-sub">${fmtS(biggest[1])}</div></div>
+    <div class="card green"><div class="c-label">Kategori</div><div class="c-val">${cats.length}</div><div class="c-sub">Item anggaran</div></div>`;
+
+  let h='';
+  cats.forEach(cat=>{
+    h+=`<tr class="cat-row"><td colspan="5">${cat}</td></tr>`;
+    DATA.budget.filter(d=>d.cat===cat).forEach(d=>{
+      h+=`<tr>
+        <td>${d.item}</td>
+        <td class="tn">${d.qty}</td>
+        <td class="tn">${d.price>0?fmt(d.price):'—'}</td>
+        <td class="tn" style="color:var(--gold)">${d.qty*d.price>0?fmt(d.qty*d.price):'Include'}</td>
+        <td style="font-size:11px;color:var(--muted)">${d.note||'—'}</td>
+      </tr>`;
+    });
+    const ct=DATA.budget.filter(d=>d.cat===cat).reduce((s,d)=>s+d.qty*d.price,0);
+    h+=`<tr class="tot-row"><td>Total ${cat}</td><td></td><td></td><td class="tn">${fmt(ct)}</td><td></td></tr>`;
+  });
+  h+=`<tr class="tot-row" style="background:rgba(201,168,76,.1)"><td colspan="3"><strong>GRAND TOTAL</strong></td><td class="tn" style="color:var(--gold);font-size:15px">${fmt(total)}</td><td></td></tr>`;
+  document.getElementById('bgt-tbl').innerHTML=h;
+}
+
+// ── VENDOR ───────────────────────────────────────────────────
+function renderVendor(){
+  const statusLabel={'open':'Open Bidding','confirm':'Confirmed','nego':'Negosiasi'};
+  const statusCls={'open':'vs-open','confirm':'vs-confirm','nego':'vs-nego'};
+  document.getElementById('vendor-grid').innerHTML=DATA.vendor.map(v=>`
+    <div class="vendor-card">
+      <h3>${v.nama}</h3>
+      <div class="vendor-type">${v.type}</div>
+      ${v.detail.map(d=>`<div class="vendor-row"><span class="lbl">${d.lbl}</span><span class="val">${d.val}</span></div>`).join('')}
+      <div class="vendor-status ${statusCls[v.status]}">${statusLabel[v.status]}</div>
+    </div>`).join('');
+
+  document.getElementById('spec-tbl').innerHTML=`
+    <tr class="cat-row"><td colspan="3">Bus</td></tr>
+    <tr><td>Tipe Armada</td><td>JB5 Single Glass Elegan</td><td>Minimum requirement</td></tr>
+    <tr><td>Kapasitas</td><td>50 seat / unit</td><td>Termasuk pengemudi</td></tr>
+    <tr><td>Fasilitas</td><td>AC, reclining seat, audio system</td><td>Wajib</td></tr>
+    <tr><td>Budget Maks</td><td style="font-family:'DM Mono',monospace">Rp7.000.000 / unit</td><td>Per hari</td></tr>
+    <tr class="cat-row"><td colspan="3">Hotel</td></tr>
+    <tr><td>Klasifikasi</td><td>Minimum Bintang 3</td><td>Wajib</td></tr>
+    <tr><td>Kapasitas Kamar</td><td>Minimum 4 pax / kamar</td><td>Twin/double sharing</td></tr>
+    <tr><td>Tarif Dewasa</td><td style="font-family:'DM Mono',monospace">Rp350.000 / pax</td><td>Include 3x makan</td></tr>
+    <tr><td>Tarif Anak &lt;12</td><td style="font-family:'DM Mono',monospace">Rp300.000 / pax</td><td>Include 3x makan</td></tr>
+    <tr><td>Meals</td><td>Sarapan, makan siang, makan malam</td><td>Wajib include</td></tr>`;
+}
+
+// ── ITINERARY ────────────────────────────────────────────────
+function renderItinerary(){
+  document.getElementById('itin-wrap').innerHTML=DATA.itinerary.map(day=>`
+    <div class="itin-day">${day.day}</div>
+    ${day.items.map(item=>`
+      <div class="itin-item">
+        <div class="itin-time">${item.time}</div>
+        <div class="itin-detail">
+          <div class="itin-title">${item.title}</div>
+          ${item.sub?`<div class="itin-sub">${item.sub}</div>`:''}
+        </div>
+      </div>`).join('')}`).join('');
+}
+
+// ── LOAD FROM GAS ────────────────────────────────────────────
+function toNum(s){ return parseFloat(String(s).replace(/[^0-9.-]/g,''))||0; }
+
+function parseRows(rows){
+  if(!rows||rows.length<2) return [];
+  const headers=rows[0].map(h=>String(h).trim().toLowerCase());
+  return rows.slice(1).map(row=>{
+    const obj={};
+    headers.forEach((h,i)=>{ obj[h]=String(row[i]||'').trim(); });
+    return obj;
+  }).filter(r=>Object.values(r).some(v=>v!==''));
+}
+
+async function loadFromGAS(){
+  setStatus('spin','Memuat data dari Google Sheets...');
+  try {
+    const res = await fetch(GAS_URL);
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const json = await res.json();
+
+    // Parse Peserta
+    if(json.peserta?.length>1){
+      DATA.peserta = parseRows(json.peserta).map(r=>({
+        seksi:   r.seksi||'',
+        peserta: toNum(r.peserta),
+        dewasa:  toNum(r.dewasa),
+        anak:    toNum(r.anak),
+        status:  r.status||'Pending',
+        catatan: r.catatan||''
+      })).filter(r=>r.seksi);
+    }
+
+    // Parse Budget
+    if(json.budget?.length>1){
+      DATA.budget = parseRows(json.budget).map(r=>({
+        cat:   r.cat||'',
+        item:  r.item||'',
+        qty:   toNum(r.qty),
+        price: toNum(r.price),
+        note:  r.note||''
+      })).filter(r=>r.item);
+    }
+
+    // Parse Vendor (group by nama)
+    if(json.vendor?.length>1){
+      const vrows = parseRows(json.vendor);
+      const vmap = {};
+      vrows.forEach(r=>{
+        if(!vmap[r.nama]) vmap[r.nama]={ nama:r.nama, type:r.type, status:r.status, detail:[] };
+        if(r.detail_key) vmap[r.nama].detail.push({ lbl:r.detail_key, val:r.detail_val });
+      });
+      DATA.vendor = Object.values(vmap);
+    }
+
+    // Parse Itinerary (group by day)
+    if(json.itinerary?.length>1){
+      const irows = parseRows(json.itinerary);
+      const imap = {};
+      irows.forEach(r=>{
+        if(!imap[r.day]) imap[r.day]={ day:r.day, items:[] };
+        imap[r.day].items.push({ time:r.time, title:r.title, sub:r.sub||'' });
+      });
+      DATA.itinerary = Object.values(imap);
+    }
+
+    // Parse Info
+    if(json.info?.length>1){
+      parseRows(json.info).forEach(r=>{ if(r.key) DATA.info[r.key]=r.value; });
+    }
+
+    const now = new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'});
+    setStatus('ok','Live dari Google Sheets');
+    document.getElementById('s-time').textContent='Update: '+now;
+
+  } catch(e) {
+    setStatus('err','Gagal memuat — pakai data lokal');
+    console.warn(e);
+  }
+  renderAll();
+}
+
+// ── INIT ─────────────────────────────────────────────────────
+function renderAll(){
+  renderOverview();
+  renderPeserta();
+  renderBudget();
+  renderVendor();
+  renderItinerary();
+}
+
+// Kalau GAS_URL sudah diisi → load dari Sheets, kalau belum → pakai data lokal
+if(GAS_URL && GAS_URL !== 'GANTI_DENGAN_URL_APPS_SCRIPT_TOUR'){
+  loadFromGAS();
+} else {
+  setStatus('ok','Data lokal (belum konek Sheets)');
+  document.getElementById('s-time').textContent='26–27 Sep 2026';
+  renderAll();
+}
+</script>
+</body>
+</html>
