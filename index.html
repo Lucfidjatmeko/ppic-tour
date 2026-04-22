@@ -5,124 +5,172 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tour Dashboard FY2026 — PAD PPIC & Warehouse</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
-  :root{
-    --red:#C8102E;--red-light:#FF2B4A;--gold:#C9A84C;--gold-light:#F0C96A;
-    --black:#0D0D0D;--dark:#161616;--panel:#1E1E1E;--panel2:#252525;
-    --border:#2E2E2E;--text:#E8E8E8;--muted:#888;
-    --green:#2ECC71;--orange:#F39C12;--blue:#3498DB;--purple:#9B59B6;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html,body{width:100%;overflow-x:hidden}
-  body{background:var(--black);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.5;min-height:100vh}
+:root{
+  --gold:#C9A84C;--gold-light:#F0C96A;--gold-dark:#9B6E1A;
+  --black:#0A0A0F;--dark:#12121A;--panel:#1A1A26;--panel2:#20202E;
+  --border:#2A2A3E;--text:#E8E8F0;--muted:#7070A0;
+  --green:#27AE60;--red:#E74C3C;--blue:#2980B9;--orange:#E67E22;--purple:#8E44AD;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;overflow-x:hidden}
+body{background:var(--black);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.5;min-height:100vh}
 
-  /* HEADER */
-  .header{background:var(--dark);border-bottom:2px solid var(--gold);padding:0 24px;display:flex;align-items:stretch;position:sticky;top:0;z-index:100}
-  .header-brand{display:flex;align-items:center;gap:14px;padding:13px 20px 13px 0;border-right:1px solid var(--border);margin-right:18px;flex-shrink:0}
-  .logo-box{width:36px;height:36px;background:var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:14px;color:var(--black);line-height:1;text-align:center}
-  .brand-text h1{font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:2px;color:white;line-height:1}
-  .brand-text p{font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
-  .nav-tabs{display:flex;align-items:center;flex:1;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
-  .nav-tabs::-webkit-scrollbar{display:none}
-  .nav-tab{padding:10px 15px;border:none;background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .2s;white-space:nowrap;flex-shrink:0}
-  .nav-tab:hover{color:var(--text)}.nav-tab.active{color:var(--gold-light);border-bottom-color:var(--gold)}
-  .fy-badge{margin-left:auto;align-self:center;background:var(--gold);color:var(--black);font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:2px;padding:4px 12px;border-radius:2px;flex-shrink:0}
+/* HEADER */
+.header{background:var(--dark);border-bottom:2px solid var(--gold);padding:0 24px;display:flex;align-items:stretch;position:sticky;top:0;z-index:200}
+.header-brand{display:flex;align-items:center;gap:12px;padding:12px 18px 12px 0;border-right:1px solid var(--border);margin-right:16px;flex-shrink:0}
+.logo-box{width:36px;height:36px;background:linear-gradient(135deg,var(--gold),var(--gold-dark));display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:12px;color:var(--black);border-radius:4px}
+.brand-text h1{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;color:white;line-height:1}
+.brand-text p{font-size:9px;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
+.nav-tabs{display:flex;align-items:center;flex:1;overflow-x:auto;scrollbar-width:none}
+.nav-tabs::-webkit-scrollbar{display:none}
+.nav-tab{padding:10px 14px;border:none;background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .2s;white-space:nowrap;flex-shrink:0}
+.nav-tab:hover{color:var(--text)}.nav-tab.active{color:var(--gold-light);border-bottom-color:var(--gold)}
+.header-right{display:flex;align-items:center;gap:8px;margin-left:auto;padding:8px 0;flex-shrink:0}
+.fy-badge{background:var(--gold);color:var(--black);font-family:'Bebas Neue',sans-serif;font-size:12px;letter-spacing:2px;padding:4px 10px;border-radius:3px}
+.export-btn{padding:6px 12px;border:1px solid var(--border);background:var(--panel2);color:var(--muted);font-size:11px;cursor:pointer;border-radius:3px;transition:all .2s;display:flex;align-items:center;gap:5px}
+.export-btn:hover{border-color:var(--gold);color:var(--gold)}
 
-  /* STATUS BAR */
-  .status-bar{display:flex;align-items:center;gap:8px;padding:7px 24px;background:var(--panel2);border-bottom:1px solid var(--border);font-size:11px}
-  .s-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--orange)}
-  .s-dot.ok{background:var(--green)}.s-dot.err{background:#FF6B6B}
-  .s-dot.spin{background:var(--orange);animation:blink .8s infinite}
-  @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-  .s-text{color:var(--muted)}.s-time{margin-left:auto;color:var(--border);font-family:'DM Mono',monospace;font-size:10px}
+/* STATUS */
+.status-bar{display:flex;align-items:center;gap:8px;padding:6px 24px;background:var(--panel2);border-bottom:1px solid var(--border);font-size:11px}
+.s-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;background:var(--orange)}
+.s-dot.ok{background:var(--green)}.s-dot.err{background:var(--red)}
+.s-dot.spin{background:var(--orange);animation:blink .8s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.s-text{color:var(--muted)}.s-time{margin-left:auto;color:var(--border);font-family:'DM Mono',monospace;font-size:10px}
 
-  /* PAGES */
-  .page{display:none;padding:24px;max-width:1300px;margin:0 auto;width:100%}.page.active{display:block}
-  .sec-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;color:white;display:flex;align-items:center;gap:10px;margin-bottom:18px}
-  .sec-title::before{content:'';display:block;width:4px;height:22px;background:var(--gold);flex-shrink:0}
+/* PAGES */
+.page{display:none;padding:22px;max-width:1400px;margin:0 auto;width:100%}.page.active{display:block}
+.sec-title{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;color:white;display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.sec-title::before{content:'';display:block;width:4px;height:20px;background:var(--gold);flex-shrink:0}
+.sec-title i{font-size:16px;color:var(--gold)}
 
-  /* CARDS */
-  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:26px}
-  .card{background:var(--panel);border:1px solid var(--border);border-top:3px solid var(--gold);padding:16px;animation:fadeUp .4s ease both}
-  .card.red{border-top-color:var(--red)}.card.blue{border-top-color:var(--blue)}.card.green{border-top-color:var(--green)}.card.purple{border-top-color:var(--purple)}.card.orange{border-top-color:var(--orange)}
-  @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-  .c-label{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:5px}
-  .c-val{font-family:'DM Mono',monospace;font-size:20px;color:white;margin-bottom:3px}
-  .c-sub{font-size:11px;color:var(--muted)}
-  .pill{display:inline-block;font-size:11px;padding:2px 8px;border-radius:20px;font-weight:600;margin-top:5px}
-  .pill-g{background:rgba(46,204,113,.15);color:var(--green)}
-  .pill-r{background:rgba(200,16,46,.15);color:#FF6B6B}
-  .pill-o{background:rgba(243,156,18,.15);color:var(--orange)}
-  .pill-b{background:rgba(52,152,219,.15);color:var(--blue)}
-  .pill-gold{background:rgba(201,168,76,.15);color:var(--gold)}
-  .pbar-bg{background:var(--border);height:6px;border-radius:3px;overflow:hidden;margin-top:8px}
-  .pbar-fill{height:100%;border-radius:3px;transition:width 1s ease}
+/* SUMMARY CARDS */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:22px}
+.card{background:var(--panel);border:1px solid var(--border);border-top:3px solid var(--gold);padding:16px;animation:fadeUp .4s ease both;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;top:0;right:0;width:60px;height:60px;border-radius:50%;background:rgba(201,168,76,.05);transform:translate(20px,-20px)}
+.card.red{border-top-color:var(--red)}.card.blue{border-top-color:var(--blue)}
+.card.green{border-top-color:var(--green)}.card.orange{border-top-color:var(--orange)}
+.card.purple{border-top-color:var(--purple)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.c-icon{font-size:20px;margin-bottom:8px;opacity:.7}
+.c-label{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:4px}
+.c-val{font-family:'DM Mono',monospace;font-size:18px;color:white;margin-bottom:2px;font-weight:500}
+.c-sub{font-size:11px;color:var(--muted)}
+.pill{display:inline-flex;align-items:center;gap:4px;font-size:11px;padding:2px 8px;border-radius:20px;font-weight:600;margin-top:4px}
+.pill-g{background:rgba(39,174,96,.15);color:var(--green)}
+.pill-r{background:rgba(231,76,60,.15);color:var(--red)}
+.pill-o{background:rgba(230,126,34,.15);color:var(--orange)}
+.pill-b{background:rgba(41,128,185,.15);color:var(--blue)}
+.pill-gold{background:rgba(201,168,76,.15);color:var(--gold)}
+.pbar-bg{background:var(--border);height:4px;border-radius:3px;overflow:hidden;margin-top:8px}
+.pbar-fill{height:100%;border-radius:3px;transition:width 1s ease}
 
-  /* COUNTDOWN */
-  .countdown{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:26px}
-  .cd-box{background:var(--panel);border:1px solid var(--border);padding:16px;text-align:center}
-  .cd-num{font-family:'Bebas Neue',sans-serif;font-size:42px;color:var(--gold);line-height:1}
-  .cd-lbl{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-top:4px}
+/* CHARTS */
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:22px}
+.chart-box{background:var(--panel);border:1px solid var(--border);padding:20px;border-radius:2px}
+.chart-box h3{font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:2px;color:var(--gold);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.chart-legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)}
+.legend-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
 
-  /* TABLES */
-  .tbl-wrap{overflow-x:auto;margin-bottom:26px;-webkit-overflow-scrolling:touch}
-  table{width:100%;border-collapse:collapse;min-width:400px}
-  thead th{background:var(--panel2);padding:9px 12px;text-align:left;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);font-weight:500}
-  tbody tr{border-bottom:1px solid var(--border);transition:background .15s}
-  tbody tr:hover{background:rgba(255,255,255,.025)}
-  tbody td{padding:9px 12px;font-size:13px}
-  .tn{font-family:'DM Mono',monospace;text-align:right}
-  .cat-row td{background:var(--panel2);font-family:'Bebas Neue',sans-serif;font-size:12px;letter-spacing:1.5px;color:var(--gold);padding:7px 12px}
-  .tot-row td{background:rgba(201,168,76,.06);font-weight:600;font-family:'DM Mono',monospace;border-top:1px solid rgba(201,168,76,.2)}
+/* INSIGHT BOX */
+.insight-box{background:linear-gradient(135deg,rgba(201,168,76,.08),rgba(201,168,76,.02));border:1px solid rgba(201,168,76,.2);border-left:4px solid var(--gold);padding:16px;margin-bottom:22px}
+.insight-box h3{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:2px;color:var(--gold);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.insight-list{list-style:none;display:flex;flex-direction:column;gap:6px}
+.insight-list li{font-size:12px;color:var(--muted);display:flex;align-items:flex-start;gap:8px}
+.insight-list li::before{content:'›';color:var(--gold);font-size:14px;line-height:1.2;flex-shrink:0}
 
-  /* VENDOR CARDS */
-  .vendor-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:26px}
-  .vendor-card{background:var(--panel);border:1px solid var(--border);padding:20px}
-  .vendor-card h3{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;color:var(--gold);margin-bottom:4px}
-  .vendor-type{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:14px}
-  .vendor-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:13px}
-  .vendor-row:last-child{border-bottom:none}
-  .vendor-row .lbl{color:var(--muted)}
-  .vendor-row .val{font-family:'DM Mono',monospace;font-weight:600}
-  .vendor-status{display:inline-block;font-size:10px;padding:3px 10px;border-radius:20px;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-top:12px}
-  .vs-open{background:rgba(243,156,18,.15);color:var(--orange)}
-  .vs-confirm{background:rgba(46,204,113,.15);color:var(--green)}
-  .vs-nego{background:rgba(52,152,219,.15);color:var(--blue)}
+/* TABLES */
+.tbl-wrap{overflow-x:auto;margin-bottom:22px;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;min-width:400px}
+thead th{background:var(--panel2);padding:9px 12px;text-align:left;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);font-weight:500;cursor:pointer;user-select:none;white-space:nowrap}
+thead th:hover{color:var(--gold)}
+thead th .sort-icon{margin-left:4px;opacity:.4}
+tbody tr{border-bottom:1px solid var(--border);transition:background .15s}
+tbody tr:hover{background:rgba(201,168,76,.04)}
+tbody tr.highlight{background:rgba(201,168,76,.08)}
+tbody td{padding:9px 12px;font-size:13px}
+.tn{font-family:'DM Mono',monospace;text-align:right}
+.cat-row td{background:var(--panel2);font-family:'Bebas Neue',sans-serif;font-size:11px;letter-spacing:1.5px;color:var(--gold);padding:6px 12px}
+.tot-row td{background:rgba(201,168,76,.06);font-weight:600;font-family:'DM Mono',monospace;border-top:1px solid rgba(201,168,76,.2)}
 
-  /* ITINERARY */
-  .itin-wrap{display:flex;flex-direction:column;gap:0;margin-bottom:26px}
-  .itin-day{background:var(--panel2);padding:10px 16px;font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:2px;color:var(--gold);border-left:4px solid var(--gold)}
-  .itin-item{display:grid;grid-template-columns:80px 1fr;gap:0;border-bottom:1px solid var(--border)}
-  .itin-time{padding:12px 16px;font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);border-right:1px solid var(--border);display:flex;align-items:center}
-  .itin-detail{padding:12px 16px}
-  .itin-title{font-size:13px;font-weight:600;color:var(--text)}
-  .itin-sub{font-size:11px;color:var(--muted);margin-top:2px}
+/* SIMULASI */
+.sim-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:22px}
+.sim-box{background:var(--panel);border:1px solid var(--border);padding:20px}
+.sim-box h3{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:2px;color:var(--gold);margin-bottom:16px}
+.slider-wrap{margin-bottom:14px}
+.slider-label{display:flex;justify-content:space-between;margin-bottom:6px;font-size:12px}
+.slider-label span:first-child{color:var(--muted)}
+.slider-val{color:var(--gold);font-family:'DM Mono',monospace;font-weight:600}
+input[type=range]{width:100%;-webkit-appearance:none;height:4px;border-radius:2px;background:var(--border);outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--gold);cursor:pointer}
+.sim-result{background:var(--panel2);border:1px solid var(--border);padding:12px;margin-top:12px}
+.sim-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:13px}
+.sim-row:last-child{border-bottom:none;margin-top:4px;padding-top:8px;border-top:1px solid var(--border)}
+.sim-row .lbl{color:var(--muted)}
+.sim-row .val{font-family:'DM Mono',monospace}
 
-  /* PESERTA SUMMARY */
-  .peserta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:26px}
-  .peserta-card{background:var(--panel);border:1px solid var(--border);padding:18px}
-  .peserta-card h3{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:2px;color:var(--gold);margin-bottom:12px;border-bottom:1px solid var(--border);padding-bottom:8px}
-  .peserta-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:13px}
-  .peserta-row .lbl{color:var(--muted)}
-  .peserta-n{font-family:'DM Mono',monospace;font-weight:600}
-  .peserta-tot{display:flex;justify-content:space-between;padding:10px 0 0;margin-top:8px;border-top:1px solid var(--border);font-weight:600}
-  .peserta-tot .peserta-n{color:var(--gold);font-size:18px}
+/* DEFISIT SKENARIO */
+.skenario-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px}
+.skenario-card{background:var(--panel);border:1px solid var(--border);border-top:3px solid var(--orange);padding:16px}
+.skenario-card h4{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:1.5px;color:var(--orange);margin-bottom:10px}
+.skenario-big{font-family:'DM Mono',monospace;font-size:22px;color:var(--red);margin:8px 0}
+.skenario-sub{font-size:11px;color:var(--muted)}
 
-  /* LOAD/ERR */
-  .load-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 0;gap:14px}
-  .spinner{width:30px;height:30px;border:3px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite}
-  @keyframes spin{to{transform:rotate(360deg)}}
-  .load-txt{font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:3px;color:var(--muted)}
-  .err-wrap{text-align:center;padding:40px;color:var(--muted);font-size:13px;line-height:2.2}
+/* COUNTDOWN */
+.countdown{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:22px}
+.cd-box{background:var(--panel);border:1px solid var(--border);padding:14px;text-align:center}
+.cd-num{font-family:'Bebas Neue',sans-serif;font-size:38px;color:var(--gold);line-height:1}
+.cd-lbl{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-top:4px}
 
-  footer{text-align:center;padding:20px;color:var(--border);font-size:11px;letter-spacing:1px;border-top:1px solid var(--border);margin-top:28px}
+/* VENDOR */
+.vendor-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-bottom:22px}
+.vendor-card{background:var(--panel);border:1px solid var(--border);padding:18px}
+.vendor-card h3{font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:2px;color:var(--gold);margin-bottom:4px}
+.vendor-type{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);margin-bottom:12px}
+.vendor-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:13px}
+.vendor-row .lbl{color:var(--muted)}.vendor-row .val{font-family:'DM Mono',monospace;font-weight:600}
+.vendor-status{display:inline-block;font-size:10px;padding:3px 10px;border-radius:20px;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-top:12px}
+.vs-open{background:rgba(230,126,34,.15);color:var(--orange)}
+.vs-confirm{background:rgba(39,174,96,.15);color:var(--green)}
+.vs-nego{background:rgba(41,128,185,.15);color:var(--blue)}
 
-  @media(max-width:580px){
-    .page{padding:14px}.header{padding:0 12px}.status-bar{padding:7px 12px}
-    .brand-text p{display:none}.nav-tab{padding:10px 10px;font-size:12px}
-    .cards{grid-template-columns:1fr 1fr}.countdown{grid-template-columns:repeat(4,1fr)}
-    .cd-num{font-size:28px}
-  }
+/* ITINERARY */
+.itin-wrap{display:flex;flex-direction:column;gap:0;margin-bottom:22px}
+.itin-day{background:var(--panel2);padding:9px 16px;font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:2px;color:var(--gold);border-left:4px solid var(--gold)}
+.itin-item{display:grid;grid-template-columns:80px 1fr;border-bottom:1px solid var(--border)}
+.itin-time{padding:11px 16px;font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);border-right:1px solid var(--border);display:flex;align-items:center}
+.itin-detail{padding:11px 16px}
+.itin-title{font-size:13px;font-weight:600;color:var(--text)}
+.itin-sub{font-size:11px;color:var(--muted);margin-top:2px}
+
+/* PESERTA */
+.peserta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:22px}
+.peserta-card{background:var(--panel);border:1px solid var(--border);padding:18px}
+.peserta-card h3{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:2px;color:var(--gold);margin-bottom:12px;border-bottom:1px solid var(--border);padding-bottom:8px}
+.peserta-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:13px}
+.peserta-row .lbl{color:var(--muted)}.peserta-n{font-family:'DM Mono',monospace;font-weight:600}
+.peserta-tot{display:flex;justify-content:space-between;padding:10px 0 0;margin-top:8px;border-top:1px solid var(--border);font-weight:600}
+.peserta-tot .peserta-n{color:var(--gold);font-size:18px}
+
+.load-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 0;gap:14px}
+.spinner{width:30px;height:30px;border:3px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.load-txt{font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:3px;color:var(--muted)}
+
+footer{text-align:center;padding:20px;color:var(--border);font-size:11px;letter-spacing:1px;border-top:1px solid var(--border);margin-top:28px}
+
+@media(max-width:700px){
+  .page{padding:14px}.header{padding:0 12px}.status-bar{padding:6px 12px}
+  .brand-text p{display:none}.cards{grid-template-columns:1fr 1fr}
+  .chart-grid{grid-template-columns:1fr}.sim-grid{grid-template-columns:1fr}
+  .skenario-grid{grid-template-columns:1fr}.countdown{grid-template-columns:repeat(4,1fr)}
+  .cd-num{font-size:24px}.nav-tab{padding:10px 10px;font-size:11px}
+  .header-right .export-btn span{display:none}
+}
 </style>
 </head>
 <body>
@@ -132,17 +180,23 @@
     <div class="logo-box">TOUR</div>
     <div class="brand-text">
       <h1>Tour Dashboard</h1>
-      <p>Plant Administration Division - Manufacturing &amp; PE Directorate</p>
+      <p>Plant Administration Division · Manufacturing &amp; PE Directorate</p>
     </div>
   </div>
   <nav class="nav-tabs">
-    <button class="nav-tab active" onclick="showPage('overview',this)">Overview</button>
-    <button class="nav-tab" onclick="showPage('peserta',this)">Peserta</button>
-    <button class="nav-tab" onclick="showPage('budget',this)">Budget</button>
-    <button class="nav-tab" onclick="showPage('vendor',this)">Vendor</button>
-    <button class="nav-tab" onclick="showPage('itinerary',this)">Itinerary</button>
+    <button class="nav-tab active" onclick="showPage('overview',this)"><i class="fa fa-chart-pie"></i> Overview</button>
+    <button class="nav-tab" onclick="showPage('analisis',this)"><i class="fa fa-chart-bar"></i> Analisis</button>
+    <button class="nav-tab" onclick="showPage('simulasi',this)"><i class="fa fa-sliders"></i> Simulasi</button>
+    <button class="nav-tab" onclick="showPage('peserta',this)"><i class="fa fa-users"></i> Peserta</button>
+    <button class="nav-tab" onclick="showPage('budget',this)"><i class="fa fa-wallet"></i> Budget</button>
+    <button class="nav-tab" onclick="showPage('vendor',this)"><i class="fa fa-handshake"></i> Vendor</button>
+    <button class="nav-tab" onclick="showPage('itinerary',this)"><i class="fa fa-map-marked-alt"></i> Itinerary</button>
   </nav>
-  <div class="fy-badge">SEP 2026</div>
+  <div class="header-right">
+    <button class="export-btn" onclick="exportPDF()"><i class="fa fa-file-pdf"></i> <span>PDF</span></button>
+    <button class="export-btn" onclick="exportExcel()"><i class="fa fa-file-excel"></i> <span>Excel</span></button>
+    <div class="fy-badge">SEP 2026</div>
+  </div>
 </header>
 
 <div class="status-bar">
@@ -153,39 +207,128 @@
 
 <!-- OVERVIEW -->
 <div class="page active" id="page-overview">
-  <div class="sec-title">Overview Tour</div>
-  <div id="ov-wrap"><div class="load-wrap"><div class="spinner"></div><div class="load-txt">Memuat...</div></div></div>
-  <div class="sec-title" style="font-size:18px;margin-bottom:14px">Hitung Mundur</div>
+  <div class="sec-title"><i class="fa fa-chart-pie"></i> Overview Tour FY2026</div>
+  <div id="ov-cards"><div class="load-wrap"><div class="spinner"></div><div class="load-txt">Memuat...</div></div></div>
+  <div class="sec-title" style="font-size:17px;margin-bottom:14px"><i class="fa fa-clock"></i> Hitung Mundur</div>
   <div class="countdown" id="countdown"></div>
-  <div id="ov-extra"></div>
+  <div class="insight-box" id="insight-box"></div>
+  <div class="chart-grid" id="ov-charts"></div>
+</div>
+
+<!-- ANALISIS -->
+<div class="page" id="page-analisis">
+  <div class="sec-title"><i class="fa fa-chart-bar"></i> Analisis Biaya</div>
+  <div id="analisis-cards"></div>
+  <div class="chart-grid" id="analisis-charts"></div>
+  <div class="sec-title" style="font-size:17px;margin-bottom:14px"><i class="fa fa-exclamation-triangle"></i> Skenario Defisit</div>
+  <div class="skenario-grid" id="skenario-grid"></div>
+</div>
+
+<!-- SIMULASI -->
+<div class="page" id="page-simulasi">
+  <div class="sec-title"><i class="fa fa-sliders"></i> Simulasi Biaya</div>
+  <div class="sim-grid">
+    <div class="sim-box">
+      <h3><i class="fa fa-calculator"></i> Parameter Simulasi</h3>
+      <div class="slider-wrap">
+        <div class="slider-label"><span>Total Pax</span><span class="slider-val" id="sv-pax">98</span></div>
+        <input type="range" min="50" max="300" value="98" id="sl-pax" oninput="updateSim()">
+      </div>
+      <div class="slider-wrap">
+        <div class="slider-label"><span>Harga Hotel Dewasa (Rp)</span><span class="slider-val" id="sv-hotel">350.000</span></div>
+        <input type="range" min="200000" max="700000" step="10000" value="350000" id="sl-hotel" oninput="updateSim()">
+      </div>
+      <div class="slider-wrap">
+        <div class="slider-label"><span>Harga Hotel Anak (Rp)</span><span class="slider-val" id="sv-hotel-anak">300.000</span></div>
+        <input type="range" min="150000" max="500000" step="10000" value="300000" id="sl-hotel-anak" oninput="updateSim()">
+      </div>
+      <div class="slider-wrap">
+        <div class="slider-label"><span>Harga Bus / Unit (Rp)</span><span class="slider-val" id="sv-bus">7.000.000</span></div>
+        <input type="range" min="3000000" max="15000000" step="100000" value="7000000" id="sl-bus" oninput="updateSim()">
+      </div>
+      <div class="slider-wrap">
+        <div class="slider-label"><span>Jumlah Karyawan</span><span class="slider-val" id="sv-kar">93</span></div>
+        <input type="range" min="10" max="200" value="93" id="sl-kar" oninput="updateSim()">
+      </div>
+      <div class="slider-wrap">
+        <div class="slider-label"><span>Dana Tersedia (juta Rp)</span><span class="slider-val" id="sv-dana">198.7</span></div>
+        <input type="range" min="50" max="400" step="0.5" value="198.7" id="sl-dana" oninput="updateSim()">
+      </div>
+    </div>
+    <div class="sim-box">
+      <h3><i class="fa fa-calculator"></i> Hasil Simulasi</h3>
+      <div class="sim-result" id="sim-result"></div>
+    </div>
+  </div>
+  <div style="margin-top:6px">
+    <div class="chart-box" style="max-width:600px">
+      <h3><i class="fa fa-chart-bar"></i> Komposisi Biaya Simulasi</h3>
+      <div style="position:relative;height:250px"><canvas id="sim-chart" role="img" aria-label="Chart simulasi biaya"></canvas></div>
+    </div>
+  </div>
 </div>
 
 <!-- PESERTA -->
 <div class="page" id="page-peserta">
-  <div class="sec-title">Data Peserta</div>
+  <div class="sec-title"><i class="fa fa-users"></i> Data Peserta</div>
+  <div id="peserta-progress"></div>
   <div class="peserta-grid" id="peserta-grid"></div>
-  <div class="sec-title" style="font-size:18px;margin-bottom:14px">Detail per Seksi</div>
-  <div class="tbl-wrap"><table>
-    <thead><tr><th>Seksi</th><th class="tn">Peserta</th><th class="tn">Pax Dewasa</th><th class="tn">Pax Anak</th><th class="tn">Total Pax</th><th>Status</th></tr></thead>
+  <div class="sec-title" style="font-size:17px;margin-bottom:14px"><i class="fa fa-table"></i> Rekap per Seksi</div>
+  <div class="tbl-wrap"><table id="peserta-tbl-wrap">
+    <thead><tr>
+      <th onclick="sortTable('peserta-tbl',0)">Seksi <span class="sort-icon">↕</span></th>
+      <th onclick="sortTable('peserta-tbl',1)" class="tn">Peserta <span class="sort-icon">↕</span></th>
+      <th onclick="sortTable('peserta-tbl',2)" class="tn">Dewasa <span class="sort-icon">↕</span></th>
+      <th onclick="sortTable('peserta-tbl',3)" class="tn">Anak <span class="sort-icon">↕</span></th>
+      <th onclick="sortTable('peserta-tbl',4)" class="tn">Total Pax <span class="sort-icon">↕</span></th>
+      <th>Status</th>
+    </tr></thead>
     <tbody id="peserta-tbl"></tbody>
+  </table></div>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px">
+    <div class="sec-title" style="font-size:17px;margin-bottom:0"><i class="fa fa-list"></i> List Peserta</div>
+    <input id="search-peserta" type="text" placeholder="🔍 Cari nama / seksi / NIK..." onkeyup="filterPeserta()"
+      style="padding:7px 12px;background:var(--panel2);border:1px solid var(--border);color:var(--text);font-size:12px;border-radius:3px;width:250px;outline:none">
+  </div>
+  <div class="tbl-wrap"><table>
+    <thead><tr>
+      <th>No</th>
+      <th>Nama</th>
+      <th>NIK</th>
+      <th>Seksi</th>
+      <th class="tn">Dewasa</th>
+      <th class="tn">Anak</th>
+      <th class="tn">Total Pax</th>
+      <th>Kaos</th>
+      <th>Lengan</th>
+      <th>Transport</th>
+      <th>Status</th>
+    </tr></thead>
+    <tbody id="list-tbl"></tbody>
   </table></div>
 </div>
 
 <!-- BUDGET -->
 <div class="page" id="page-budget">
-  <div class="sec-title">Budget Tour</div>
+  <div class="sec-title"><i class="fa fa-wallet"></i> Rencana Budget</div>
   <div class="cards" id="bgt-cards"></div>
   <div class="tbl-wrap"><table>
-    <thead><tr><th>Item</th><th class="tn">Qty</th><th class="tn">Harga Satuan</th><th class="tn">Total</th><th>Catatan</th></tr></thead>
+    <thead><tr>
+      <th onclick="sortTable('bgt-tbl',0)">Item <span class="sort-icon">↕</span></th>
+      <th onclick="sortTable('bgt-tbl',1)" class="tn">Qty <span class="sort-icon">↕</span></th>
+      <th onclick="sortTable('bgt-tbl',2)" class="tn">Harga Satuan <span class="sort-icon">↕</span></th>
+      <th onclick="sortTable('bgt-tbl',3)" class="tn">Total <span class="sort-icon">↕</span></th>
+      <th>Catatan</th>
+    </tr></thead>
     <tbody id="bgt-tbl"></tbody>
   </table></div>
 </div>
 
 <!-- VENDOR -->
 <div class="page" id="page-vendor">
-  <div class="sec-title">Data Vendor</div>
+  <div class="sec-title"><i class="fa fa-handshake"></i> Data Vendor</div>
   <div class="vendor-grid" id="vendor-grid"></div>
-  <div class="sec-title" style="font-size:18px;margin-bottom:14px">Spesifikasi Teknis</div>
+  <div class="sec-title" style="font-size:17px;margin-bottom:14px"><i class="fa fa-list"></i> Spesifikasi Teknis</div>
   <div class="tbl-wrap"><table>
     <thead><tr><th>Item</th><th>Spesifikasi</th><th>Keterangan</th></tr></thead>
     <tbody id="spec-tbl"></tbody>
@@ -194,117 +337,76 @@
 
 <!-- ITINERARY -->
 <div class="page" id="page-itinerary">
-  <div class="sec-title">Itinerary Tour</div>
+  <div class="sec-title"><i class="fa fa-map-marked-alt"></i> Itinerary Tour</div>
   <div class="itin-wrap" id="itin-wrap"></div>
 </div>
 
-<footer>Tour Dashboard FY2026 &middot; Plant Administration Division &middot; 26–27 September 2026</footer>
+<footer>Tour Dashboard FY2026 &middot; Plant Administration Division &middot; Manufacturing &amp; PE Directorate &middot; 26–27 September 2026</footer>
 
 <script>
-// ── APPS SCRIPT URL ── ganti dengan URL GAS tour Anda
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbxDxFgGLXDuwi4KgcxEWUstyEbWIMuRS5MWddLXKgm19V9cXipW9x4YuPDAqSrLi6Ow/exec';
+const TOUR_DATE = new Date('2026-09-26T05:30:00');
 
-// ── DATA STATIS (langsung tampil tanpa Sheets) ────────────────
-// Bisa diganti dengan data dari GAS jika sudah tersedia
-
-const TOUR_DATE = new Date('2026-09-26T07:00:00');
-
-const DATA = {
-  info: {
-    tanggal: '26–27 September 2026',
-    tujuan:  'Bandung & Lembang',
-    tema:    'Family Gathering PPIC & Warehouse',
-    pic:     'Lucfi Djatmeko'
-  },
-  summary: {
-    totalPeserta:0, totalDewasa:0, totalAnak:0, totalPax:0,
-    confirmed:0, confirmedPax:0, confirmedDewasa:0, confirmedAnak:0,
-    pending:0, declined:0
-  },
-  kaos: [],
-  transportasi: [],
-
-  // ── PESERTA ─────────────────────────────────────────────────
-  peserta: [
-    { seksi:'CCR & Ordering NR Engine', peserta:14, dewasa:20, anak:8 },
-    { seksi:'PPIC Plant 1',             peserta:10, dewasa:15, anak:5 },
-    { seksi:'PPIC Plant 2',             peserta:10, dewasa:14, anak:4 },
-    { seksi:'Warehouse Plant 1',        peserta:12, dewasa:18, anak:6 },
-    { seksi:'Warehouse Plant 2',        peserta:12, dewasa:16, anak:5 },
-    { seksi:'Logistic',                 peserta:8,  dewasa:10, anak:3 },
-    { seksi:'PAD Admin & Support',      peserta:6,  dewasa:8,  anak:2 },
+// ── DATA (fallback jika GAS gagal) ───────────────────────────
+let D = {
+  summary:{ totalPeserta:93,totalDewasa:72,totalAnak:26,totalPax:98,confirmed:93,confirmedPax:98,confirmedDewasa:72,confirmedAnak:26,pending:0,declined:0,busNeeded:2,kamarNeeded:25 },
+  peserta:[
+    {seksi:'CCR & Ordering NR Engine',peserta:14,dewasa:20,anak:8,confirmed:14,pending:0,declined:0},
+    {seksi:'PPIC Plant 1',peserta:10,dewasa:15,anak:5,confirmed:10,pending:0,declined:0},
+    {seksi:'PPIC Plant 2',peserta:10,dewasa:14,anak:4,confirmed:10,pending:0,declined:0},
+    {seksi:'Warehouse Plant 1',peserta:12,dewasa:18,anak:6,confirmed:12,pending:0,declined:0},
+    {seksi:'Warehouse Plant 2',peserta:12,dewasa:16,anak:5,confirmed:12,pending:0,declined:0},
+    {seksi:'Logistic',peserta:8,dewasa:10,anak:3,confirmed:8,pending:0,declined:0},
+    {seksi:'PAD Admin & Support',peserta:6,dewasa:8,anak:2,confirmed:6,pending:0,declined:0},
   ],
-
-  // ── BUDGET ──────────────────────────────────────────────────
-  budget: [
-    { cat:'Transportasi', item:'Bus JB5 Single Glass Elegan 50-seat', qty:2, price:7000000, note:'Rp7jt/unit' },
-    { cat:'Transportasi', item:'BBM & Tol',                            qty:1, price:1500000, note:'Estimasi' },
-    { cat:'Akomodasi',    item:'Hotel min bintang 3 (Dewasa)',          qty:72, price:350000, note:'Rp350k/pax' },
-    { cat:'Akomodasi',    item:'Hotel (Anak <12)',                      qty:26, price:300000, note:'Rp300k/pax' },
-    { cat:'Konsumsi',     item:'Makan 3x (include hotel)',              qty:1,  price:0,      note:'Include paket hotel' },
-    { cat:'Acara',        item:'Outbound / Games',                      qty:1,  price:3000000, note:'Estimasi' },
-    { cat:'Acara',        item:'Doorprize & Hadiah',                    qty:1,  price:2000000, note:'Estimasi' },
-    { cat:'Acara',        item:'Dokumentasi / Fotografer',              qty:1,  price:1500000, note:'Estimasi' },
-    { cat:'Lain-lain',    item:'Kaos Peserta',                          qty:98, price:85000,  note:'Estimasi' },
-    { cat:'Lain-lain',    item:'Biaya Tak Terduga',                     qty:1,  price:2000000, note:'Buffer 5%' },
+  listPeserta: [],
+  targetPeserta: 100,
+  lengan:[{model:'Pendek',jumlah:68},{model:'Panjang',jumlah:25}],
+  transportasi:[{jenis:'Bus',jumlah:85},{jenis:'Kendaraan Sendiri',jumlah:13}],
+  budget:[
+    {cat:'Transportasi',item:'Bus JB5 Single Glass Elegan 50-seat',qty:2,price:7000000,note:'Rp7jt/unit'},
+    {cat:'Transportasi',item:'BBM & Tol',qty:1,price:1500000,note:'Estimasi'},
+    {cat:'Akomodasi',item:'Hotel min bintang 3 (Dewasa)',qty:72,price:350000,note:'Rp350k/pax'},
+    {cat:'Akomodasi',item:'Hotel (Anak <12)',qty:26,price:300000,note:'Rp300k/pax'},
+    {cat:'Acara',item:'Outbound / Games',qty:1,price:3000000,note:'Estimasi'},
+    {cat:'Acara',item:'Doorprize & Hadiah',qty:1,price:2000000,note:'Estimasi'},
+    {cat:'Acara',item:'Dokumentasi / Fotografer',qty:1,price:1500000,note:'Estimasi'},
+    {cat:'Lain-lain',item:'Kaos Peserta',qty:93,price:85000,note:'Estimasi'},
+    {cat:'Lain-lain',item:'Biaya Tak Terduga',qty:1,price:2000000,note:'Buffer'},
   ],
-
-  // ── VENDOR ──────────────────────────────────────────────────
-  vendor: [
-    {
-      nama:'TBD — Open Bidding Bus',
-      type:'Transportasi',
-      status:'open',
-      detail:[
-        {lbl:'Tipe',  val:'JB5 Single Glass Elegan'},
-        {lbl:'Kapasitas', val:'50 seat / unit'},
-        {lbl:'Jumlah', val:'2 unit'},
-        {lbl:'Budget', val:'Rp7.000.000 / unit'},
-        {lbl:'Deadline', val:'25 April 2026'},
-      ]
-    },
-    {
-      nama:'TBD — Open Bidding Hotel',
-      type:'Akomodasi',
-      status:'open',
-      detail:[
-        {lbl:'Minimum', val:'Bintang 3'},
-        {lbl:'Kapasitas', val:'4 pax / kamar'},
-        {lbl:'Tarif Dewasa', val:'Rp350.000 / pax'},
-        {lbl:'Tarif Anak <12', val:'Rp300.000 / pax'},
-        {lbl:'Meals', val:'3x makan'},
-        {lbl:'Deadline', val:'25 April 2026'},
-      ]
-    },
+  vendor:[
+    {nama:'TBD — Open Bidding Bus',type:'Transportasi',status:'open',detail:[{lbl:'Tipe',val:'JB5 Single Glass Elegan'},{lbl:'Kapasitas',val:'50 seat/unit'},{lbl:'Jumlah',val:'2 unit'},{lbl:'Budget',val:'Rp7.000.000/unit'},{lbl:'Deadline',val:'25 April 2026'}]},
+    {nama:'TBD — Open Bidding Hotel',type:'Akomodasi',status:'open',detail:[{lbl:'Min Bintang',val:'3'},{lbl:'Kapasitas',val:'4 pax/kamar'},{lbl:'Tarif Dewasa',val:'Rp350.000/pax'},{lbl:'Tarif Anak <12',val:'Rp300.000/pax'},{lbl:'Meals',val:'3x makan'},{lbl:'Deadline',val:'25 April 2026'}]},
   ],
-
-  // ── ITINERARY ────────────────────────────────────────────────
-  itinerary: [
-    { day:'Hari 1 — Sabtu, 26 September 2026', items:[
-      { time:'05.30', title:'Kumpul & Briefing', sub:'Area parkir TMMIN Karawang' },
-      { time:'06.00', title:'Keberangkatan', sub:'Karawang → Bandung via Tol Cipularang' },
-      { time:'09.00', title:'Tiba di Lokasi', sub:'Check-in hotel / penginapan' },
-      { time:'10.00', title:'Outbound & Games', sub:'Family games, lomba, ice breaking' },
-      { time:'12.00', title:'Makan Siang', sub:'Prasmanan bersama' },
-      { time:'13.00', title:'Free Program', sub:'Wisata / aktivitas keluarga' },
-      { time:'17.00', title:'Kembali ke Hotel', sub:'Istirahat & bebas' },
-      { time:'19.00', title:'Makan Malam', sub:'Gala dinner & hiburan' },
-      { time:'21.00', title:'Istirahat', sub:'' },
+  itinerary:[
+    {day:'Hari 1 — Sabtu, 26 September 2026',items:[
+      {time:'05.30',title:'Kumpul & Briefing',sub:'Area parkir TMMIN Karawang'},
+      {time:'06.00',title:'Keberangkatan',sub:'Karawang → Bandung via Tol Cipularang'},
+      {time:'09.00',title:'Tiba & Check-in',sub:'Hotel / penginapan'},
+      {time:'10.00',title:'Outbound & Games',sub:'Family games, lomba, ice breaking'},
+      {time:'12.00',title:'Makan Siang',sub:'Prasmanan bersama'},
+      {time:'13.00',title:'Free Program',sub:'Wisata / aktivitas keluarga'},
+      {time:'17.00',title:'Kembali ke Hotel',sub:'Istirahat & bebas'},
+      {time:'19.00',title:'Makan Malam',sub:'Gala dinner & hiburan'},
+      {time:'21.00',title:'Istirahat',sub:''},
     ]},
-    { day:'Hari 2 — Minggu, 27 September 2026', items:[
-      { time:'06.00', title:'Sarapan', sub:'' },
-      { time:'07.00', title:'Check-out', sub:'Persiapan kepulangan' },
-      { time:'08.00', title:'Wisata Pagi', sub:'Destinasi lokal (TBD)' },
-      { time:'11.00', title:'Makan Siang', sub:'' },
-      { time:'12.00', title:'Keberangkatan Pulang', sub:'Bandung → Karawang' },
-      { time:'15.00', title:'Tiba di Karawang', sub:'Estimasi (tergantung lalu lintas)' },
+    {day:'Hari 2 — Minggu, 27 September 2026',items:[
+      {time:'06.00',title:'Sarapan',sub:''},
+      {time:'07.00',title:'Check-out',sub:'Persiapan kepulangan'},
+      {time:'08.00',title:'Wisata Pagi',sub:'Destinasi lokal (TBD)'},
+      {time:'11.00',title:'Makan Siang',sub:''},
+      {time:'12.00',title:'Keberangkatan Pulang',sub:'Bandung → Karawang'},
+      {time:'15.00',title:'Tiba di Karawang',sub:'Estimasi'},
     ]},
-  ]
+  ],
+  danaTersedia: 198744000,
 };
 
 // ── HELPERS ──────────────────────────────────────────────────
 const fmt  = n => 'Rp'+Math.round(n||0).toLocaleString('id-ID');
 const fmtS = n => { n=n||0; return n>=1000000?'Rp'+(n/1000000).toFixed(1)+'jt':n>=1000?'Rp'+(n/1000).toFixed(0)+'rb':'Rp'+n; };
+const fmtNum = n => Math.round(n||0).toLocaleString('id-ID');
+const pct  = (a,b) => b>0?((a/b)*100).toFixed(1):0;
 
 function setStatus(state,msg){
   const dot=document.getElementById('s-dot'),txt=document.getElementById('s-text');
@@ -316,249 +418,473 @@ function showPage(name,el){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
   document.getElementById('page-'+name).classList.add('active');
-  el.classList.add('active');
+  if(el) el.classList.add('active');
+}
+
+// ── LOAD FROM GAS ────────────────────────────────────────────
+async function loadData(){
+  setStatus('spin','Memuat data dari Google Sheets...');
+  try{
+    const res=await fetch(GAS_URL);
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const json=await res.json();
+    if(json.summary)              D.summary=json.summary;
+    if(json.peserta?.length)      D.peserta=json.peserta;
+    if(json.listPeserta?.length)  D.listPeserta=json.listPeserta;
+    if(json.targetPeserta)        D.targetPeserta=json.targetPeserta;
+    if(json.budget?.length)       D.budget=json.budget;
+    if(json.vendor?.length)       D.vendor=json.vendor;
+    if(json.itinerary?.length)    D.itinerary=json.itinerary;
+    if(json.kaos?.length)         D.kaos=json.kaos;
+    if(json.lengan?.length)       D.lengan=json.lengan;
+    if(json.transportasi?.length) D.transportasi=json.transportasi;
+    if(json.info)                 D.danaTersedia=toNum(json.info.dana_tersedia)||D.danaTersedia;
+    if(json.info?.dana_tersedia) D.danaTersedia=parseFloat(String(json.info.dana_tersedia).replace(/[^0-9.-]/g,''))||D.danaTersedia;
+    const now=new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'});
+    setStatus('ok','Live dari Google Sheets');
+    document.getElementById('s-time').textContent='Update: '+now;
+  }catch(e){
+    setStatus('err','Pakai data lokal — '+e.message);
+  }
+  renderAll();
+}
+
+// ── TOTAL BUDGET ─────────────────────────────────────────────
+function totalBudget(){ return D.budget.reduce((s,d)=>s+d.qty*d.price,0); }
+function budgetByKat(){
+  const c={};
+  D.budget.forEach(d=>{ if(!c[d.cat])c[d.cat]=0; c[d.cat]+=d.qty*d.price; });
+  return c;
 }
 
 // ── COUNTDOWN ────────────────────────────────────────────────
 function renderCountdown(){
-  const now=new Date(), diff=TOUR_DATE-now;
-  if(diff<=0){ document.getElementById('countdown').innerHTML='<div style="grid-column:1/-1;text-align:center;font-family:Bebas Neue,sans-serif;font-size:24px;letter-spacing:3px;color:var(--gold)">Tour sudah dilaksanakan!</div>'; return; }
+  const diff=TOUR_DATE-new Date();
+  if(diff<=0){document.getElementById('countdown').innerHTML='<div style="grid-column:1/-1;text-align:center;font-family:Bebas Neue,sans-serif;font-size:22px;letter-spacing:3px;color:var(--gold)">Tour sudah dilaksanakan!</div>';return;}
   const d=Math.floor(diff/86400000),h=Math.floor((diff%86400000)/3600000),m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);
-  document.getElementById('countdown').innerHTML=
-    [['Hari',d],['Jam',h],['Menit',m],['Detik',s]].map(([lbl,val])=>
-      `<div class="cd-box"><div class="cd-num">${String(val).padStart(2,'0')}</div><div class="cd-lbl">${lbl}</div></div>`
-    ).join('');
+  document.getElementById('countdown').innerHTML=[['Hari',d],['Jam',h],['Menit',m],['Detik',s]]
+    .map(([l,v])=>`<div class="cd-box"><div class="cd-num">${String(v).padStart(2,'0')}</div><div class="cd-lbl">${l}</div></div>`).join('');
+}
+
+// ── INSIGHT ──────────────────────────────────────────────────
+function renderInsight(){
+  const tb=totalBudget(),bk=budgetByKat(),sm=D.summary;
+  const terbesar=Object.entries(bk).sort((a,b)=>b[1]-a[1])[0];
+  const selisih=D.danaTersedia-tb;
+  const costPerPax=sm.confirmedPax>0?Math.round(tb/sm.confirmedPax):0;
+  const insights=[
+    `Biaya terbesar berasal dari <strong style="color:var(--gold)">${terbesar[0]}</strong> sebesar ${fmtS(terbesar[1])} (${pct(terbesar[1],tb)}% dari total)`,
+    selisih<0?`<strong style="color:var(--red)">Defisit ${fmt(Math.abs(selisih))}</strong> atau ${pct(Math.abs(selisih),D.danaTersedia)}% dari dana tersedia`:`<strong style="color:var(--green)">Surplus ${fmt(selisih)}</strong> dari dana tersedia`,
+    `Cost per pax <strong style="color:var(--gold)">${fmt(costPerPax)}</strong> — ${costPerPax<800000?'masih dalam range wajar outing perusahaan':'di atas rata-rata outing standar'}`,
+    `${sm.confirmed} dari ${sm.totalPeserta} karyawan confirmed (${pct(sm.confirmed,sm.totalPeserta)}%) — ${sm.pending>0?sm.pending+' masih pending':'semua sudah konfirmasi'}`,
+    `Membutuhkan <strong style="color:var(--gold)">${sm.busNeeded} unit bus</strong> dan estimasi <strong style="color:var(--gold)">${sm.kamarNeeded} kamar</strong> hotel`,
+  ];
+  document.getElementById('insight-box').innerHTML=`
+    <h3><i class="fa fa-lightbulb"></i> Insight Otomatis</h3>
+    <ul class="insight-list">${insights.map(i=>`<li>${i}</li>`).join('')}</ul>`;
+}
+
+// ── CHARTS ───────────────────────────────────────────────────
+let chartInstances={};
+function destroyChart(id){ if(chartInstances[id]){chartInstances[id].destroy();delete chartInstances[id];} }
+
+function renderOvCharts(){
+  const bk=budgetByKat();
+  const colors=['#C9A84C','#2980B9','#E67E22','#27AE60','#E74C3C','#8E44AD','#1ABC9C'];
+  const cats=Object.keys(bk), vals=Object.values(bk);
+
+  document.getElementById('ov-charts').innerHTML=`
+    <div class="chart-box">
+      <h3><i class="fa fa-chart-pie"></i> Komposisi Biaya</h3>
+      <div class="chart-legend" id="leg-biaya"></div>
+      <div style="position:relative;height:220px"><canvas id="chart-biaya" role="img" aria-label="Pie chart komposisi biaya tour"></canvas></div>
+    </div>
+    <div class="chart-box">
+      <h3><i class="fa fa-users"></i> Komposisi Peserta</h3>
+      <div class="chart-legend" id="leg-peserta"></div>
+      <div style="position:relative;height:220px"><canvas id="chart-peserta" role="img" aria-label="Donut chart komposisi peserta"></canvas></div>
+    </div>`;
+
+  // Legend biaya
+  document.getElementById('leg-biaya').innerHTML=cats.map((c,i)=>
+    `<div class="legend-item"><div class="legend-dot" style="background:${colors[i%colors.length]}"></div>${c}: ${fmtS(vals[i])}</div>`
+  ).join('');
+
+  destroyChart('biaya');
+  chartInstances['biaya']=new Chart(document.getElementById('chart-biaya'),{
+    type:'pie',
+    data:{ labels:cats, datasets:[{data:vals,backgroundColor:colors,borderColor:'#12121A',borderWidth:2}] },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+c.label+': '+fmt(c.raw)+' ('+pct(c.raw,vals.reduce((a,b)=>a+b,0))+'%)'}}}}
+  });
+
+  // Donut peserta
+  const sm=D.summary;
+  const pData=[sm.confirmedDewasa,sm.confirmedAnak,Math.max(0,sm.confirmedPax-sm.confirmedDewasa-sm.confirmedAnak)];
+  const pLabels=['Dewasa','Anak <12','Balita'];
+  const pColors=['#2980B9','#C9A84C','#27AE60'];
+  document.getElementById('leg-peserta').innerHTML=pLabels.map((l,i)=>
+    `<div class="legend-item"><div class="legend-dot" style="background:${pColors[i]}"></div>${l}: ${pData[i]} pax</div>`
+  ).join('');
+  destroyChart('peserta');
+  chartInstances['peserta']=new Chart(document.getElementById('chart-peserta'),{
+    type:'doughnut',
+    data:{labels:pLabels,datasets:[{data:pData,backgroundColor:pColors,borderColor:'#12121A',borderWidth:2}]},
+    options:{responsive:true,maintainAspectRatio:false,cutout:'65%',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>' '+c.label+': '+c.raw+' pax'}}}}
+  });
 }
 
 // ── OVERVIEW ─────────────────────────────────────────────────
 function renderOverview(){
-  const sm = DATA.summary;
-  const totalPeserta = sm.totalPeserta || DATA.peserta.reduce((s,r)=>s+r.peserta,0);
-  const totalDewasa  = sm.totalDewasa  || DATA.peserta.reduce((s,r)=>s+r.dewasa,0);
-  const totalAnak    = sm.totalAnak    || DATA.peserta.reduce((s,r)=>s+r.anak,0);
-  const totalPax     = sm.totalPax     || (totalDewasa+totalAnak);
-  const confirmed    = sm.confirmed    || totalPeserta;
-  const confirmedPax = sm.confirmedPax || totalPax;
-  const pending      = sm.pending      || 0;
-  const declined     = sm.declined     || 0;
-  const totalBudget  = DATA.budget.reduce((s,d)=>s+d.qty*d.price,0);
-  const busNeeded    = Math.ceil(confirmedPax/50);
+  const sm=D.summary, tb=totalBudget(), selisih=D.danaTersedia-tb;
+  const costPerPax=sm.confirmedPax>0?Math.round(tb/sm.confirmedPax):0;
 
-  document.getElementById('ov-wrap').innerHTML=`<div class="cards">
-    <div class="card"><div class="c-label">Total Registrasi</div><div class="c-val" style="color:var(--gold)">${totalPeserta}</div><div class="c-sub">Karyawan terdaftar</div></div>
-    <div class="card green"><div class="c-label">Confirmed</div><div class="c-val">${confirmed}</div><div class="c-sub">${confirmedPax} pax ikut tour</div></div>
-    <div class="card orange"><div class="c-label">Pending</div><div class="c-val">${pending}</div><div class="c-sub">Belum konfirmasi</div></div>
-    <div class="card red"><div class="c-label">Declined</div><div class="c-val">${declined}</div><div class="c-sub">Tidak ikut</div></div>
-    <div class="card blue"><div class="c-label">Total Pax (Confirmed)</div><div class="c-val">${confirmedPax}</div><div class="c-sub">${sm.confirmedDewasa||totalDewasa} dewasa · ${sm.confirmedAnak||totalAnak} anak</div></div>
-    <div class="card"><div class="c-label">Estimasi Budget</div><div class="c-val" style="font-size:15px">${fmtS(totalBudget)}</div><div class="c-sub">${busNeeded} bus dibutuhkan</div></div>
+  document.getElementById('ov-cards').innerHTML=`<div class="cards">
+    <div class="card"><div class="c-icon" style="color:var(--gold)"><i class="fa fa-users"></i></div><div class="c-label">Total Karyawan</div><div class="c-val">${fmtNum(sm.totalPeserta)}</div><div class="c-sub">terdaftar</div></div>
+    <div class="card green"><div class="c-icon" style="color:var(--green)"><i class="fa fa-check-circle"></i></div><div class="c-label">Confirmed</div><div class="c-val">${fmtNum(sm.confirmed)}</div><div class="c-sub">${sm.confirmedPax} pax ikut</div></div>
+    <div class="card orange"><div class="c-icon" style="color:var(--orange)"><i class="fa fa-clock"></i></div><div class="c-label">Pending</div><div class="c-val">${fmtNum(sm.pending)}</div><div class="c-sub">belum konfirmasi</div></div>
+    <div class="card blue"><div class="c-icon" style="color:var(--blue)"><i class="fa fa-user-friends"></i></div><div class="c-label">Total Pax</div><div class="c-val">${fmtNum(sm.confirmedPax)}</div><div class="c-sub">${sm.confirmedDewasa} dewasa · ${sm.confirmedAnak} anak</div></div>
+    <div class="card ${selisih>=0?'green':'red'}"><div class="c-icon" style="color:${selisih>=0?'var(--green)':'var(--red)'}"><i class="fa fa-${selisih>=0?'check':'exclamation-triangle'}"></i></div><div class="c-label">Selisih Budget</div><div class="c-val" style="font-size:14px;color:${selisih>=0?'var(--green)':'var(--red)'}">${selisih>=0?'+':''}${fmtS(selisih)}</div><div class="c-sub">Dana: ${fmtS(D.danaTersedia)}</div></div>
+    <div class="card"><div class="c-icon" style="color:var(--gold)"><i class="fa fa-money-bill-wave"></i></div><div class="c-label">Cost per Pax</div><div class="c-val" style="font-size:14px">${fmt(costPerPax)}</div><div class="c-sub">${costPerPax<800000?'✓ Range wajar':'⚠ Di atas rata-rata'}</div></div>
   </div>`;
 
-  // Kaos summary
-  let kaosHtml = '';
-  if(DATA.kaos?.length){
-    kaosHtml = `<div class="sec-title" style="font-size:18px;margin-bottom:14px">Rekap Ukuran Kaos</div>
-    <div class="cards">${DATA.kaos.map(k=>`<div class="card" style="text-align:center">
-      <div class="c-label">Ukuran ${k.ukuran}</div>
-      <div class="c-val" style="font-size:28px">${k.jumlah}</div>
-      <div class="c-sub">pcs</div>
-    </div>`).join('')}</div>`;
-  }
-
-  // Transportasi summary
-  let transHtml = '';
-  if(DATA.transportasi?.length){
-    transHtml = `<div class="sec-title" style="font-size:18px;margin-bottom:14px">Rekap Transportasi</div>
-    <div class="cards">${DATA.transportasi.map(t=>`<div class="card blue">
-      <div class="c-label">${t.jenis}</div>
-      <div class="c-val">${t.jumlah}</div>
-      <div class="c-sub">peserta</div>
-    </div>`).join('')}</div>`;
-  }
-
-  document.getElementById('ov-extra').innerHTML = kaosHtml + transHtml;
-
+  renderInsight();
   renderCountdown();
-  setInterval(renderCountdown,1000);
+  renderOvCharts();
+}
+
+// ── ANALISIS ─────────────────────────────────────────────────
+function renderAnalisis(){
+  const bk=budgetByKat(), tb=totalBudget(), sm=D.summary;
+  const selisih=D.danaTersedia-tb;
+  const cats=Object.keys(bk), vals=Object.values(bk);
+  const colors=['#C9A84C','#2980B9','#E67E22','#27AE60','#E74C3C','#8E44AD','#1ABC9C'];
+
+  document.getElementById('analisis-cards').innerHTML=`<div class="cards">
+    <div class="card"><div class="c-label">Total Budget</div><div class="c-val" style="font-size:14px">${fmt(tb)}</div><div class="pbar-bg"><div class="pbar-fill" style="width:${Math.min(pct(tb,D.danaTersedia),100)}%;background:var(--gold)"></div></div></div>
+    <div class="card blue"><div class="c-label">Dana Tersedia</div><div class="c-val" style="font-size:14px">${fmt(D.danaTersedia)}</div></div>
+    <div class="card ${selisih>=0?'green':'red'}"><div class="c-label">Selisih</div><div class="c-val" style="font-size:14px;color:${selisih>=0?'var(--green)':'var(--red)'}">${fmt(Math.abs(selisih))}</div><div class="c-sub">${selisih>=0?'Surplus':'Defisit'}</div></div>
+    <div class="card orange"><div class="c-label">% Serap Budget</div><div class="c-val">${pct(tb,D.danaTersedia)}%</div></div>
+  </div>`;
+
+  document.getElementById('analisis-charts').innerHTML=`
+    <div class="chart-box">
+      <h3><i class="fa fa-chart-bar"></i> Budget per Kategori</h3>
+      <div style="position:relative;height:${cats.length*45+60}px"><canvas id="chart-bar" role="img" aria-label="Bar chart budget per kategori"></canvas></div>
+    </div>
+    <div class="chart-box">
+      <h3><i class="fa fa-tshirt"></i> Rekap Ukuran Kaos</h3>
+      <div style="position:relative;height:220px"><canvas id="chart-kaos" role="img" aria-label="Bar chart ukuran kaos"></canvas></div>
+      ${D.lengan?.length?`<div class="chart-legend" style="margin-top:12px">${D.lengan.map(l=>`<div class="legend-item"><i class="fa fa-circle" style="font-size:8px;color:var(--gold)"></i> ${l.model}: ${l.jumlah}</div>`).join('')}</div>`:''}
+    </div>`;
+
+  destroyChart('bar');
+  chartInstances['bar']=new Chart(document.getElementById('chart-bar'),{
+    type:'bar',
+    data:{labels:cats,datasets:[{label:'Budget',data:vals,backgroundColor:colors,borderRadius:2}]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>fmt(c.raw)}}},scales:{x:{ticks:{color:'#7070A0',callback:v=>fmtS(v)},grid:{color:'#2A2A3E'}},y:{ticks:{color:'#7070A0'},grid:{display:false}}}}
+  });
+
+  if(D.kaos?.length){
+    destroyChart('kaos');
+    chartInstances['kaos']=new Chart(document.getElementById('chart-kaos'),{
+      type:'bar',
+      data:{labels:D.kaos.map(k=>k.ukuran),datasets:[{label:'Jumlah',data:D.kaos.map(k=>k.jumlah),backgroundColor:'#C9A84C',borderRadius:2}]},
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#7070A0'},grid:{display:false}},y:{ticks:{color:'#7070A0'},grid:{color:'#2A2A3E'}}}}
+    });
+  }
+
+  // Skenario defisit
+  const defisit=Math.abs(Math.min(selisih,0));
+  const karTotal=sm.totalPeserta||93;
+  const karAnak2=D.peserta.filter(r=>r.anak>=2).length||20;
+
+  document.getElementById('skenario-grid').innerHTML=`
+    <div class="skenario-card">
+      <h4><i class="fa fa-divide"></i> A — Dibagi Rata</h4>
+      <div class="skenario-sub">Defisit dibagi ke semua karyawan</div>
+      <div class="skenario-big">${fmt(defisit>0?Math.round(defisit/karTotal):0)}</div>
+      <div class="skenario-sub">per orang dari ${karTotal} karyawan</div>
+      <div class="pill ${defisit>0?'pill-r':'pill-g'}" style="margin-top:10px">${defisit>0?'Kurang dana':'Surplus'}</div>
+    </div>
+    <div class="skenario-card">
+      <h4><i class="fa fa-child"></i> B — Karyawan Anak ≥2</h4>
+      <div class="skenario-sub">Defisit ke karyawan dengan anak ≥2</div>
+      <div class="skenario-big">${fmt(defisit>0&&karAnak2>0?Math.round(defisit/karAnak2):0)}</div>
+      <div class="skenario-sub">per orang dari ${karAnak2} karyawan</div>
+      <div class="pill pill-o" style="margin-top:10px">Est. ${karAnak2} karyawan</div>
+    </div>
+    <div class="skenario-card">
+      <h4><i class="fa fa-balance-scale"></i> C — Kombinasi 50/50</h4>
+      <div class="skenario-sub">50% rata + 50% ke anak ≥2</div>
+      <div class="skenario-big">${fmt(defisit>0?Math.round(defisit*0.5/karTotal):0)}</div>
+      <div class="skenario-sub">rata + ${fmt(defisit>0&&karAnak2>0?Math.round(defisit*0.5/karAnak2):0)} untuk karyawan anak ≥2</div>
+      <div class="pill pill-b" style="margin-top:10px">Kombinasi</div>
+    </div>`;
+}
+
+// ── SIMULASI ─────────────────────────────────────────────────
+function updateSim(){
+  const pax    = +document.getElementById('sl-pax').value;
+  const hotel  = +document.getElementById('sl-hotel').value;
+  const hotelA = +document.getElementById('sl-hotel-anak').value;
+  const bus    = +document.getElementById('sl-bus').value;
+  const kar    = +document.getElementById('sl-kar').value;
+  const dana   = +document.getElementById('sl-dana').value * 1000000;
+
+  document.getElementById('sv-pax').textContent   = fmtNum(pax);
+  document.getElementById('sv-hotel').textContent = fmtNum(hotel);
+  document.getElementById('sv-hotel-anak').textContent = fmtNum(hotelA);
+  document.getElementById('sv-bus').textContent   = fmtNum(bus);
+  document.getElementById('sv-kar').textContent   = fmtNum(kar);
+  document.getElementById('sv-dana').textContent  = (dana/1000000).toFixed(1);
+
+  const rasio = D.summary.confirmedDewasa>0 ? D.summary.confirmedAnak/D.summary.confirmedDewasa : 0.36;
+  const dewasa = Math.round(pax/(1+rasio));
+  const anak   = pax - dewasa;
+  const busN   = Math.ceil(pax/50);
+
+  const tHotel = dewasa*hotel + anak*hotelA;
+  const tBus   = busN*bus + 1500000;
+  const tAcara = 3000000+2000000+1500000;
+  const tKaos  = kar*85000;
+  const tLain  = 2000000;
+  const total  = tHotel+tBus+tAcara+tKaos+tLain;
+  const selisih= dana-total;
+  const cpp    = pax>0?Math.round(total/pax):0;
+
+  document.getElementById('sim-result').innerHTML=`
+    <div class="sim-row"><span class="lbl">Akomodasi Hotel</span><span class="val" style="color:var(--gold)">${fmt(tHotel)}</span></div>
+    <div class="sim-row"><span class="lbl">Transportasi (${busN} bus)</span><span class="val">${fmt(tBus)}</span></div>
+    <div class="sim-row"><span class="lbl">Acara & Dokumentasi</span><span class="val">${fmt(tAcara)}</span></div>
+    <div class="sim-row"><span class="lbl">Kaos (${kar} org)</span><span class="val">${fmt(tKaos)}</span></div>
+    <div class="sim-row"><span class="lbl">Lain-lain</span><span class="val">${fmt(tLain)}</span></div>
+    <div class="sim-row"><span class="lbl" style="color:white;font-weight:600">Total Biaya</span><span class="val" style="color:var(--gold);font-size:16px">${fmt(total)}</span></div>
+    <div class="sim-row"><span class="lbl">Cost per Pax</span><span class="val">${fmt(cpp)}</span></div>
+    <div class="sim-row"><span class="lbl">Selisih</span><span class="val" style="color:${selisih>=0?'var(--green)':'var(--red)'};font-size:16px">${selisih>=0?'+':''}${fmt(selisih)}</span></div>`;
+
+  // Chart simulasi
+  destroyChart('sim');
+  chartInstances['sim']=new Chart(document.getElementById('sim-chart'),{
+    type:'bar',
+    data:{
+      labels:['Hotel','Transport','Acara','Kaos','Lain-lain'],
+      datasets:[{data:[tHotel,tBus,tAcara,tKaos,tLain],backgroundColor:['#C9A84C','#2980B9','#E67E22','#27AE60','#8E44AD'],borderRadius:3}]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>fmt(c.raw)}}},scales:{x:{ticks:{color:'#7070A0'},grid:{display:false}},y:{ticks:{color:'#7070A0',callback:v=>fmtS(v)},grid:{color:'#2A2A3E'}}}}
+  });
 }
 
 // ── PESERTA ──────────────────────────────────────────────────
 function renderPeserta(){
-  const totalP=DATA.peserta.reduce((s,r)=>s+r.peserta,0);
-  const totalD=DATA.peserta.reduce((s,r)=>s+r.dewasa,0);
-  const totalA=DATA.peserta.reduce((s,r)=>s+r.anak,0);
-  const totalPax=totalD+totalA;
-
+  const sm=D.summary;
   document.getElementById('peserta-grid').innerHTML=`
-    <div class="peserta-card"><h3>Rekapitulasi Pax</h3>
-      <div class="peserta-row"><span class="lbl">Total Karyawan</span><span class="peserta-n">${totalP}</span></div>
-      <div class="peserta-row"><span class="lbl">Pax Dewasa</span><span class="peserta-n">${totalD}</span></div>
-      <div class="peserta-row"><span class="lbl">Pax Anak (&lt;12)</span><span class="peserta-n">${totalA}</span></div>
-      <div class="peserta-tot"><span>Total Pax</span><span class="peserta-n">${totalPax}</span></div>
+    <div class="peserta-card"><h3><i class="fa fa-chart-pie"></i> Rekap Pax</h3>
+      <div class="peserta-row"><span class="lbl">Total Karyawan</span><span class="peserta-n">${sm.totalPeserta}</span></div>
+      <div class="peserta-row"><span class="lbl">Pax Dewasa</span><span class="peserta-n">${sm.confirmedDewasa}</span></div>
+      <div class="peserta-row"><span class="lbl">Pax Anak (&lt;12)</span><span class="peserta-n">${sm.confirmedAnak}</span></div>
+      <div class="peserta-tot"><span>Total Pax</span><span class="peserta-n">${sm.confirmedPax}</span></div>
     </div>
-    <div class="peserta-card"><h3>Kebutuhan Bus</h3>
-      <div class="peserta-row"><span class="lbl">Total pax</span><span class="peserta-n">${totalPax}</span></div>
-      <div class="peserta-row"><span class="lbl">Kapasitas/bus</span><span class="peserta-n">50</span></div>
-      <div class="peserta-row"><span class="lbl">Utilisasi</span><span class="peserta-n">${Math.round(totalPax/Math.ceil(totalPax/50)/50*100)}%</span></div>
-      <div class="peserta-tot"><span>Bus Dibutuhkan</span><span class="peserta-n">${Math.ceil(totalPax/50)}</span></div>
+    <div class="peserta-card"><h3><i class="fa fa-bus"></i> Kebutuhan</h3>
+      <div class="peserta-row"><span class="lbl">Bus (50-seat)</span><span class="peserta-n">${sm.busNeeded} unit</span></div>
+      <div class="peserta-row"><span class="lbl">Utilisasi bus</span><span class="peserta-n">${Math.round(sm.confirmedPax/(sm.busNeeded||1)/50*100)}%</span></div>
+      <div class="peserta-row"><span class="lbl">Kamar (4 pax)</span><span class="peserta-n">${sm.kamarNeeded} kamar</span></div>
+      <div class="peserta-tot"><span>Est. Kamar</span><span class="peserta-n">${sm.kamarNeeded}</span></div>
     </div>
-    <div class="peserta-card"><h3>Kebutuhan Kamar</h3>
-      <div class="peserta-row"><span class="lbl">4 pax / kamar</span><span class="peserta-n">${Math.ceil(totalPax/4)}</span></div>
-      <div class="peserta-row"><span class="lbl">Pax dewasa</span><span class="peserta-n">${totalD}</span></div>
-      <div class="peserta-row"><span class="lbl">Pax anak</span><span class="peserta-n">${totalA}</span></div>
-      <div class="peserta-tot"><span>Est. Kamar</span><span class="peserta-n">${Math.ceil(totalPax/4)}</span></div>
+    <div class="peserta-card"><h3><i class="fa fa-tshirt"></i> Kaos</h3>
+      ${D.kaos.map(k=>`<div class="peserta-row"><span class="lbl">Size ${k.ukuran}</span><span class="peserta-n">${k.jumlah}</span></div>`).join('')}
+      <div class="peserta-tot"><span>Total</span><span class="peserta-n">${D.kaos.reduce((s,k)=>s+k.jumlah,0)}</span></div>
+    </div>
+    <div class="peserta-card"><h3><i class="fa fa-car"></i> Transportasi</h3>
+      ${D.transportasi.map(t=>`<div class="peserta-row"><span class="lbl">${t.jenis}</span><span class="peserta-n">${t.jumlah}</span></div>`).join('')}
+      <div class="peserta-tot"><span>Total</span><span class="peserta-n">${D.transportasi.reduce((s,t)=>s+t.jumlah,0)}</span></div>
+    </div>`;
+
+  // Progress registrasi
+  const target = D.targetPeserta || 100;
+  const progPct = Math.min(Math.round(D.summary.totalPeserta/target*100),100);
+  document.getElementById('peserta-progress').innerHTML=`
+    <div class="card" style="margin-bottom:16px;border-top-color:var(--green)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <div><div class="c-label"><i class="fa fa-bullseye"></i> Progress Registrasi</div>
+          <div style="font-family:'DM Mono',monospace;font-size:24px;color:var(--green)">${D.summary.totalPeserta} <span style="font-size:14px;color:var(--muted)">/ ${target} target</span></div>
+        </div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:42px;color:${progPct>=100?'var(--green)':'var(--gold)'}">${progPct}%</div>
+      </div>
+      <div class="pbar-bg" style="height:8px">
+        <div class="pbar-fill" style="width:${progPct}%;background:${progPct>=100?'var(--green)':'var(--gold)'}"></div>
+      </div>
+      <div style="display:flex;gap:16px;margin-top:10px">
+        <span class="pill pill-g"><i class="fa fa-check"></i> ${D.summary.confirmed} confirmed</span>
+        <span class="pill pill-o"><i class="fa fa-clock"></i> ${D.summary.pending} pending</span>
+        <span class="pill pill-r"><i class="fa fa-times"></i> ${D.summary.declined} declined</span>
+      </div>
     </div>`;
 
   let h='';
-  DATA.peserta.forEach(r=>{
-    const pax=r.dewasa+r.anak;
-    h+=`<tr>
-      <td>${r.seksi}</td>
-      <td class="tn">${r.peserta}</td>
-      <td class="tn">${r.dewasa}</td>
-      <td class="tn">${r.anak}</td>
-      <td class="tn" style="color:var(--gold)">${pax}</td>
-      <td><span class="pill pill-g">Confirmed</span></td>
+  const sorted=[...D.peserta].sort((a,b)=>b.peserta-a.peserta);
+  const maxPax=Math.max(...sorted.map(r=>r.dewasa+r.anak));
+  sorted.forEach(r=>{
+    const paxTotal=r.dewasa+r.anak;
+    h+=`<tr class="${paxTotal===maxPax?'highlight':''}">
+      <td>${r.seksi}</td><td class="tn">${r.peserta}</td>
+      <td class="tn">${r.dewasa}</td><td class="tn">${r.anak}</td>
+      <td class="tn" style="color:var(--gold)">${paxTotal}</td>
+      <td><span class="pill ${r.confirmed>0?'pill-g':r.pending>0?'pill-o':'pill-r'}">${r.confirmed>0?r.confirmed+' confirmed':r.pending>0?r.pending+' pending':'declined'}</span></td>
     </tr>`;
   });
-  h+=`<tr class="tot-row">
-    <td>TOTAL</td>
-    <td class="tn">${totalP}</td>
-    <td class="tn">${totalD}</td>
-    <td class="tn">${totalA}</td>
-    <td class="tn" style="color:var(--gold)">${totalPax}</td>
-    <td></td>
-  </tr>`;
+  const totD=D.peserta.reduce((s,r)=>s+r.dewasa,0);
+  const totA=D.peserta.reduce((s,r)=>s+r.anak,0);
+  h+=`<tr class="tot-row"><td>TOTAL</td><td class="tn">${D.peserta.reduce((s,r)=>s+r.peserta,0)}</td>
+    <td class="tn">${totD}</td><td class="tn">${totA}</td>
+    <td class="tn" style="color:var(--gold)">${totD+totA}</td><td></td></tr>`;
   document.getElementById('peserta-tbl').innerHTML=h;
+
+  // List peserta per-orang
+  renderListPeserta(D.listPeserta);
+}
+
+function renderListPeserta(list){
+  if(!list||!list.length){
+    document.getElementById('list-tbl').innerHTML=`<tr><td colspan="11" style="text-align:center;color:var(--muted);padding:30px">Belum ada data peserta individual</td></tr>`;
+    return;
+  }
+  const statusColor={'ya':'pill-g','tidak':'pill-r'};
+  const statusLabel={'ya':'Ikut','tidak':'Tidak'};
+  document.getElementById('list-tbl').innerHTML=list.map(r=>`<tr>
+    <td style="color:var(--muted);font-family:'DM Mono',monospace;font-size:11px">${r.no}</td>
+    <td style="font-weight:600">${r.nama}</td>
+    <td style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted)">${r.nik}</td>
+    <td>${r.seksi}</td>
+    <td class="tn">${r.dewasa}</td>
+    <td class="tn">${r.anak}</td>
+    <td class="tn" style="color:var(--gold);font-weight:600">${r.totalPax}</td>
+    <td><span class="pill pill-gold" style="font-size:10px">${r.kaos}</span></td>
+    <td style="font-size:12px;color:var(--muted)">${r.lengan}</td>
+    <td style="font-size:12px">${r.transport}</td>
+    <td><span class="pill ${statusColor[r.ikut.toLowerCase()]||'pill-o'}">${statusLabel[r.ikut.toLowerCase()]||r.ikut}</span></td>
+  </tr>`).join('');
+}
+
+function filterPeserta(){
+  const q=document.getElementById('search-peserta').value.toLowerCase();
+  const filtered=D.listPeserta.filter(r=>
+    r.nama.toLowerCase().includes(q)||
+    r.seksi.toLowerCase().includes(q)||
+    r.nik.toLowerCase().includes(q)
+  );
+  renderListPeserta(filtered);
 }
 
 // ── BUDGET ───────────────────────────────────────────────────
 function renderBudget(){
-  const total=DATA.budget.reduce((s,d)=>s+d.qty*d.price,0);
-  const cats=[...new Set(DATA.budget.map(d=>d.cat))];
-  const bycat={};
-  cats.forEach(c=>{ bycat[c]=DATA.budget.filter(d=>d.cat===c).reduce((s,d)=>s+d.qty*d.price,0); });
-  const biggest=Object.entries(bycat).sort((a,b)=>b[1]-a[1])[0];
-
+  const tb=totalBudget(), bk=budgetByKat(), dana=D.danaTersedia, selisih=dana-tb;
   document.getElementById('bgt-cards').innerHTML=`
-    <div class="card"><div class="c-label">Total Budget</div><div class="c-val" style="font-size:16px">${fmt(total)}</div><div class="c-sub">Estimasi awal</div></div>
-    <div class="card blue"><div class="c-label">Per Karyawan</div><div class="c-val" style="font-size:16px">${fmt(Math.round(total/DATA.peserta.reduce((s,r)=>s+r.peserta,0)))}</div><div class="c-sub">Estimasi kontribusi</div></div>
-    <div class="card orange"><div class="c-label">Terbesar</div><div class="c-val" style="font-size:14px">${biggest[0]}</div><div class="c-sub">${fmtS(biggest[1])}</div></div>
-    <div class="card green"><div class="c-label">Kategori</div><div class="c-val">${cats.length}</div><div class="c-sub">Item anggaran</div></div>`;
+    <div class="card"><div class="c-label">Total Budget</div><div class="c-val" style="font-size:14px">${fmt(tb)}</div><div class="pbar-bg"><div class="pbar-fill" style="width:${Math.min(pct(tb,dana),100)}%;background:var(--gold)"></div></div></div>
+    <div class="card blue"><div class="c-label">Dana Tersedia</div><div class="c-val" style="font-size:14px">${fmt(dana)}</div></div>
+    <div class="card ${selisih>=0?'green':'red'}"><div class="c-label">Selisih</div><div class="c-val" style="font-size:14px;color:${selisih>=0?'var(--green)':'var(--red)'}">${fmt(Math.abs(selisih))}</div><div class="c-sub">${selisih>=0?'Surplus':'Defisit'}</div></div>
+    <div class="card orange"><div class="c-label">Terbesar</div><div class="c-val" style="font-size:13px">${Object.entries(bk).sort((a,b)=>b[1]-a[1])[0][0]}</div><div class="c-sub">${fmtS(Object.entries(bk).sort((a,b)=>b[1]-a[1])[0][1])}</div></div>`;
 
-  let h='';
+  const cats=[...new Set(D.budget.map(d=>d.cat))];
+  let h='', maxVal=0;
+  D.budget.forEach(d=>{ if(d.qty*d.price>maxVal)maxVal=d.qty*d.price; });
   cats.forEach(cat=>{
     h+=`<tr class="cat-row"><td colspan="5">${cat}</td></tr>`;
-    DATA.budget.filter(d=>d.cat===cat).forEach(d=>{
-      h+=`<tr>
-        <td>${d.item}</td>
-        <td class="tn">${d.qty}</td>
+    D.budget.filter(d=>d.cat===cat).forEach(d=>{
+      const tot=d.qty*d.price;
+      h+=`<tr class="${tot===maxVal?'highlight':''}">
+        <td>${d.item}</td><td class="tn">${fmtNum(d.qty)}</td>
         <td class="tn">${d.price>0?fmt(d.price):'—'}</td>
-        <td class="tn" style="color:var(--gold)">${d.qty*d.price>0?fmt(d.qty*d.price):'Include'}</td>
+        <td class="tn" style="color:var(--gold)">${tot>0?fmt(tot):'Include'}</td>
         <td style="font-size:11px;color:var(--muted)">${d.note||'—'}</td>
       </tr>`;
     });
-    const ct=DATA.budget.filter(d=>d.cat===cat).reduce((s,d)=>s+d.qty*d.price,0);
+    const ct=D.budget.filter(d=>d.cat===cat).reduce((s,d)=>s+d.qty*d.price,0);
     h+=`<tr class="tot-row"><td>Total ${cat}</td><td></td><td></td><td class="tn">${fmt(ct)}</td><td></td></tr>`;
   });
-  h+=`<tr class="tot-row" style="background:rgba(201,168,76,.1)"><td colspan="3"><strong>GRAND TOTAL</strong></td><td class="tn" style="color:var(--gold);font-size:15px">${fmt(total)}</td><td></td></tr>`;
+  h+=`<tr class="tot-row" style="background:rgba(201,168,76,.1)"><td colspan="3"><strong>GRAND TOTAL</strong></td><td class="tn" style="color:var(--gold);font-size:15px">${fmt(tb)}</td><td></td></tr>`;
   document.getElementById('bgt-tbl').innerHTML=h;
 }
 
 // ── VENDOR ───────────────────────────────────────────────────
 function renderVendor(){
-  const statusLabel={'open':'Open Bidding','confirm':'Confirmed','nego':'Negosiasi'};
-  const statusCls={'open':'vs-open','confirm':'vs-confirm','nego':'vs-nego'};
-  document.getElementById('vendor-grid').innerHTML=DATA.vendor.map(v=>`
+  const sl={'open':'vs-open','confirm':'vs-confirm','nego':'vs-nego'};
+  const sl2={'open':'Open Bidding','confirm':'Confirmed','nego':'Negosiasi'};
+  document.getElementById('vendor-grid').innerHTML=D.vendor.map(v=>`
     <div class="vendor-card">
-      <h3>${v.nama}</h3>
-      <div class="vendor-type">${v.type}</div>
+      <h3>${v.nama}</h3><div class="vendor-type">${v.type}</div>
       ${v.detail.map(d=>`<div class="vendor-row"><span class="lbl">${d.lbl}</span><span class="val">${d.val}</span></div>`).join('')}
-      <div class="vendor-status ${statusCls[v.status]}">${statusLabel[v.status]}</div>
+      <div class="vendor-status ${sl[v.status]||'vs-open'}">${sl2[v.status]||v.status}</div>
     </div>`).join('');
 
   document.getElementById('spec-tbl').innerHTML=`
     <tr class="cat-row"><td colspan="3">Bus</td></tr>
     <tr><td>Tipe Armada</td><td>JB5 Single Glass Elegan</td><td>Minimum requirement</td></tr>
     <tr><td>Kapasitas</td><td>50 seat / unit</td><td>Termasuk pengemudi</td></tr>
-    <tr><td>Fasilitas</td><td>AC, reclining seat, audio system</td><td>Wajib</td></tr>
-    <tr><td>Budget Maks</td><td style="font-family:'DM Mono',monospace">Rp7.000.000 / unit</td><td>Per hari</td></tr>
+    <tr><td>Budget Maks</td><td style="font-family:'DM Mono',monospace">Rp7.000.000 / unit / hari</td><td></td></tr>
     <tr class="cat-row"><td colspan="3">Hotel</td></tr>
     <tr><td>Klasifikasi</td><td>Minimum Bintang 3</td><td>Wajib</td></tr>
     <tr><td>Kapasitas Kamar</td><td>Minimum 4 pax / kamar</td><td>Twin/double sharing</td></tr>
     <tr><td>Tarif Dewasa</td><td style="font-family:'DM Mono',monospace">Rp350.000 / pax</td><td>Include 3x makan</td></tr>
-    <tr><td>Tarif Anak &lt;12</td><td style="font-family:'DM Mono',monospace">Rp300.000 / pax</td><td>Include 3x makan</td></tr>
-    <tr><td>Meals</td><td>Sarapan, makan siang, makan malam</td><td>Wajib include</td></tr>`;
+    <tr><td>Tarif Anak &lt;12</td><td style="font-family:'DM Mono',monospace">Rp300.000 / pax</td><td>Include 3x makan</td></tr>`;
 }
 
 // ── ITINERARY ────────────────────────────────────────────────
 function renderItinerary(){
-  document.getElementById('itin-wrap').innerHTML=DATA.itinerary.map(day=>`
+  document.getElementById('itin-wrap').innerHTML=D.itinerary.map(day=>`
     <div class="itin-day">${day.day}</div>
-    ${day.items.map(item=>`
-      <div class="itin-item">
-        <div class="itin-time">${item.time}</div>
-        <div class="itin-detail">
-          <div class="itin-title">${item.title}</div>
-          ${item.sub?`<div class="itin-sub">${item.sub}</div>`:''}
-        </div>
-      </div>`).join('')}`).join('');
+    ${day.items.map(item=>`<div class="itin-item">
+      <div class="itin-time">${item.time}</div>
+      <div class="itin-detail"><div class="itin-title">${item.title}</div>${item.sub?`<div class="itin-sub">${item.sub}</div>`:''}</div>
+    </div>`).join('')}`).join('');
 }
 
-// ── LOAD FROM GAS ────────────────────────────────────────────
-async function loadFromGAS(){
-  setStatus('spin','Memuat data dari Google Sheets...');
-  try {
-    const res = await fetch(GAS_URL);
-    if(!res.ok) throw new Error('HTTP '+res.status);
-    const json = await res.json();
+// ── TABLE SORT ───────────────────────────────────────────────
+const sortState={};
+function sortTable(tbId,col){
+  const tb=document.getElementById(tbId);
+  const rows=[...tb.querySelectorAll('tr')].filter(r=>!r.classList.contains('tot-row')&&!r.classList.contains('cat-row'));
+  const asc=sortState[tbId+col]=(sortState[tbId+col]===undefined)?true:!sortState[tbId+col];
+  rows.sort((a,b)=>{
+    const av=a.cells[col]?.textContent.replace(/[^0-9.-]/g,'')||'0';
+    const bv=b.cells[col]?.textContent.replace(/[^0-9.-]/g,'')||'0';
+    const an=parseFloat(av),bn=parseFloat(bv);
+    const cmp=isNaN(an)?av.localeCompare(bv):an-bn;
+    return asc?cmp:-cmp;
+  });
+  rows.forEach(r=>tb.appendChild(r));
+}
 
-    // Summary langsung dari GAS
-    if(json.summary) Object.assign(DATA.summary, json.summary);
-
-    // Peserta per seksi
-    if(json.peserta?.length) DATA.peserta = json.peserta;
-
-    // Budget (sudah dihitung di GAS pakai confirmed pax)
-    if(json.budget?.length) DATA.budget = json.budget;
-
-    // Vendor
-    if(json.vendor?.length) DATA.vendor = json.vendor;
-
-    // Itinerary
-    if(json.itinerary?.length) DATA.itinerary = json.itinerary;
-
-    // Kaos & transportasi
-    if(json.kaos?.length) DATA.kaos = json.kaos;
-    if(json.transportasi?.length) DATA.transportasi = json.transportasi;
-
-    const now = new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'});
-    setStatus('ok','Live dari Google Sheets · Participant Data');
-    document.getElementById('s-time').textContent='Update: '+now;
-
-  } catch(e) {
-    setStatus('err','Gagal memuat — pakai data lokal');
-    console.warn(e.message);
-  }
-  renderAll();
+// ── EXPORT ───────────────────────────────────────────────────
+function exportPDF(){ window.print(); }
+function exportExcel(){
+  const tb=totalBudget(), sm=D.summary;
+  let csv='TOUR DASHBOARD FY2026\n';
+  csv+='Plant Administration Division - Manufacturing & PE Directorate\n\n';
+  csv+='SUMMARY\n';
+  csv+=`Total Karyawan,${sm.totalPeserta}\n`;
+  csv+=`Total Pax,${sm.confirmedPax}\n`;
+  csv+=`Total Budget,${tb}\n`;
+  csv+=`Dana Tersedia,${D.danaTersedia}\n`;
+  csv+=`Selisih,${D.danaTersedia-tb}\n\n`;
+  csv+='BUDGET DETAIL\nKategori,Item,Qty,Harga Satuan,Total\n';
+  D.budget.forEach(d=>{ csv+=`${d.cat},${d.item},${d.qty},${d.price},${d.qty*d.price}\n`; });
+  const blob=new Blob([csv],{type:'text/csv'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='tour_dashboard_fy2026.csv'; a.click();
 }
 
 // ── INIT ─────────────────────────────────────────────────────
 function renderAll(){
   renderOverview();
+  renderAnalisis();
   renderPeserta();
   renderBudget();
   renderVendor();
   renderItinerary();
+  updateSim();
 }
 
-// Kalau GAS_URL sudah diisi → load dari Sheets, kalau belum → pakai data lokal
-if(GAS_URL && GAS_URL !== 'GANTI_DENGAN_URL_APPS_SCRIPT_TOUR'){
-  loadFromGAS();
-} else {
-  setStatus('ok','Data lokal (belum konek Sheets)');
-  document.getElementById('s-time').textContent='26–27 Sep 2026';
-  renderAll();
-}
+setInterval(renderCountdown,1000);
+loadData();
 </script>
 </body>
 </html>
