@@ -403,10 +403,11 @@ let D = {
 };
 
 // ── HELPERS ──────────────────────────────────────────────────
-const fmt  = n => 'Rp'+Math.round(n||0).toLocaleString('id-ID');
-const fmtS = n => { n=n||0; return n>=1000000?'Rp'+(n/1000000).toFixed(1)+'jt':n>=1000?'Rp'+(n/1000).toFixed(0)+'rb':'Rp'+n; };
+const fmt    = n => 'Rp'+Math.round(n||0).toLocaleString('id-ID');
+const fmtS   = n => { n=n||0; return n>=1000000?'Rp'+(n/1000000).toFixed(1)+'jt':n>=1000?'Rp'+(n/1000).toFixed(0)+'rb':'Rp'+n; };
 const fmtNum = n => Math.round(n||0).toLocaleString('id-ID');
-const pct  = (a,b) => b>0?((a/b)*100).toFixed(1):0;
+const pct    = (a,b) => b>0?((a/b)*100).toFixed(1):0;
+const toNum  = s => parseFloat(String(s||0).replace(/[^0-9.-]/g,''))||0;
 
 function setStatus(state,msg){
   const dot=document.getElementById('s-dot'),txt=document.getElementById('s-text');
