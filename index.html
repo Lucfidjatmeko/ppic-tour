@@ -19,17 +19,15 @@ html,body{width:100%;overflow-x:hidden}
 body{background:var(--black);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.5;min-height:100vh}
 
 /* HEADER */
-.header{background:var(--dark);border-bottom:2px solid var(--gold);padding:0 24px;display:flex;align-items:stretch;position:sticky;top:0;z-index:200}
-.header-brand{display:flex;align-items:center;gap:12px;padding:12px 18px 12px 0;border-right:1px solid var(--border);margin-right:16px;flex-shrink:0}
-.logo-box{width:36px;height:36px;background:linear-gradient(135deg,var(--gold),var(--gold-dark));display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:12px;color:var(--black);border-radius:4px}
-.brand-text h1{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;color:white;line-height:1}
-.brand-text p{font-size:9px;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
+.header{background:var(--dark);border-bottom:2px solid var(--gold);padding:0 10px;display:flex;align-items:stretch;position:sticky;top:0;z-index:200}
+.header-brand{display:flex;align-items:center;gap:8px;padding:8px 10px 8px 0;border-right:1px solid var(--border);margin-right:8px;flex-shrink:0}
+.logo-box{width:28px;height:28px;background:linear-gradient(135deg,var(--gold),var(--gold-dark));display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:10px;color:var(--black);border-radius:3px}
+.brand-text h1{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:1.5px;color:white;line-height:1}
+.brand-text p{display:none}
 .nav-tabs{display:flex;align-items:center;flex:1;overflow-x:auto;scrollbar-width:none}
 .nav-tabs::-webkit-scrollbar{display:none}
-.nav-tab{padding:10px 14px;border:none;background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .2s;white-space:nowrap;flex-shrink:0}
+.nav-tab{padding:10px 10px;border:none;background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .2s;white-space:nowrap;flex-shrink:0}
 .nav-tab:hover{color:var(--text)}.nav-tab.active{color:var(--gold-light);border-bottom-color:var(--gold)}
-.header-right{display:flex;align-items:center;gap:8px;margin-left:auto;padding:8px 0;flex-shrink:0}
-.fy-badge{background:var(--gold);color:var(--black);font-family:'Bebas Neue',sans-serif;font-size:12px;letter-spacing:2px;padding:4px 10px;border-radius:3px}
 .export-btn{padding:6px 12px;border:1px solid var(--border);background:var(--panel2);color:var(--muted);font-size:11px;cursor:pointer;border-radius:3px;transition:all .2s;display:flex;align-items:center;gap:5px}
 .export-btn:hover{border-color:var(--gold);color:var(--gold)}
 
@@ -226,12 +224,21 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
 footer{text-align:center;padding:20px;color:var(--border);font-size:11px;letter-spacing:1px;border-top:1px solid var(--border);margin-top:28px}
 
 @media(max-width:700px){
-  .page{padding:14px}.header{padding:0 12px}.status-bar{padding:6px 12px}
+  .page{padding:14px}.header{padding:0 10px}.status-bar{padding:6px 12px}
   .brand-text p{display:none}.cards{grid-template-columns:1fr 1fr}
   .chart-grid{grid-template-columns:1fr}.sim-grid{grid-template-columns:1fr}
   .skenario-grid{grid-template-columns:1fr}.countdown{grid-template-columns:repeat(4,1fr)}
-  .cd-num{font-size:24px}.nav-tab{padding:10px 10px;font-size:11px}
-  .header-right .export-btn span{display:none}
+  .cd-num{font-size:24px}.nav-tab{padding:8px 8px;font-size:11px}
+  .header-brand{padding:10px 10px 10px 0;margin-right:8px}
+  .logo-box{width:30px;height:30px;font-size:12px}
+  .brand-text h1{font-size:13px;letter-spacing:1px}
+  .fy-badge{font-size:12px;padding:3px 8px}
+  .hide-mobile{display:none!important}
+  .btn-label{display:none!important}
+  .form-btn{padding:5px 8px!important;font-size:11px!important}
+  .bus-cards{grid-template-columns:1fr}
+  .kamar-cards{grid-template-columns:1fr}
+  .vendor-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -239,10 +246,9 @@ footer{text-align:center;padding:20px;color:var(--border);font-size:11px;letter-
 
 <header class="header">
   <div class="header-brand">
-    <div class="logo-box">TOUR</div>
+    <div class="logo-box">PAD</div>
     <div class="brand-text">
-      <h1>Tour Dashboard</h1>
-      <p>Plant Administration Division · Manufacturing &amp; PE Directorate</p>
+      <h1>PPIC & WH Tour 2026</h1>
     </div>
   </div>
   <nav class="nav-tabs">
@@ -257,18 +263,17 @@ footer{text-align:center;padding:20px;color:var(--border);font-size:11px;letter-
     <button class="nav-tab" onclick="showPage('vendor',this)"><i class="fa fa-handshake"></i> Vendor</button>
     <button class="nav-tab" onclick="showPage('itinerary',this)"><i class="fa fa-map-marked-alt"></i> Itinerary</button>
   </nav>
-  <div class="header-right">
-    <a href="form.html" target="_blank" class="export-btn" style="text-decoration:none;background:rgba(201,168,76,.15);border-color:var(--gold);color:var(--gold)"><i class="fa fa-clipboard-list"></i> <span>Form Daftar</span></a>
-    <button class="export-btn" onclick="exportPDF()"><i class="fa fa-file-pdf"></i> <span>PDF</span></button>
-    <button class="export-btn" onclick="exportExcel()"><i class="fa fa-file-excel"></i> <span>Excel</span></button>
-    <div class="fy-badge">SEP 2026</div>
-  </div>
 </header>
 
 <div class="status-bar">
   <div class="s-dot spin" id="s-dot"></div>
   <span class="s-text" id="s-text">Memuat data...</span>
-  <span class="s-time" id="s-time"></span>
+  <div style="margin-left:auto;display:flex;align-items:center;gap:8px">
+    <a href="form.html" target="_blank" style="text-decoration:none;display:inline-flex;align-items:center;gap:5px;padding:4px 10px;background:rgba(201,168,76,.15);border:1px solid var(--gold);color:var(--gold);border-radius:3px;font-size:11px;font-weight:600;font-family:'DM Sans',sans-serif"><i class="fa fa-clipboard-list"></i> Form Daftar</a>
+    <button onclick="exportPDF()" class="hide-mobile" style="padding:4px 10px;background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:3px;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif"><i class="fa fa-file-pdf"></i> PDF</button>
+    <button onclick="exportExcel()" class="hide-mobile" style="padding:4px 10px;background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:3px;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif"><i class="fa fa-file-excel"></i> Excel</button>
+    <span class="s-time" id="s-time"></span>
+  </div>
 </div>
 
 <!-- OVERVIEW -->
