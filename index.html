@@ -24,8 +24,9 @@ body{background:var(--black);color:var(--text);font-family:'DM Sans',sans-serif;
 .logo-box{width:28px;height:28px;background:linear-gradient(135deg,var(--gold),var(--gold-dark));display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:10px;color:var(--black);border-radius:3px}
 .brand-text h1{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:1.5px;color:white;line-height:1}
 .brand-text p{display:none}
-.nav-tabs{display:flex;align-items:center;flex:1;overflow-x:auto;scrollbar-width:none}
+.nav-tabs{display:flex;align-items:center;flex:1;overflow-x:auto;scrollbar-width:none;position:relative}
 .nav-tabs::-webkit-scrollbar{display:none}
+.nav-tabs::after{content:'';position:absolute;right:0;top:0;height:100%;width:32px;background:linear-gradient(to right,transparent,var(--dark));pointer-events:none;flex-shrink:0}
 .nav-tab{padding:10px 10px;border:none;background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .2s;white-space:nowrap;flex-shrink:0}
 .nav-tab:hover{color:var(--text)}.nav-tab.active{color:var(--gold-light);border-bottom-color:var(--gold)}
 .export-btn{padding:6px 12px;border:1px solid var(--border);background:var(--panel2);color:var(--muted);font-size:11px;cursor:pointer;border-radius:3px;transition:all .2s;display:flex;align-items:center;gap:5px}
