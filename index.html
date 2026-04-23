@@ -156,7 +156,69 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;heigh
 .peserta-tot{display:flex;justify-content:space-between;padding:10px 0 0;margin-top:8px;border-top:1px solid var(--border);font-weight:600}
 .peserta-tot .peserta-n{color:var(--gold);font-size:18px}
 
-.load-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 0;gap:14px}
+/* REALISASI */
+.real-tbl td.dp{color:var(--green);font-family:'DM Mono',monospace;font-size:12px}
+.real-tbl td.dn{color:var(--red);font-family:'DM Mono',monospace;font-size:12px}
+.real-tbl td.dz{color:var(--muted);font-family:'DM Mono',monospace;font-size:12px}
+
+/* KAMAR */
+.kamar-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:20px}
+.kamar-stat{background:var(--panel);border:1px solid var(--border);border-top:3px solid var(--gold);padding:14px;text-align:center}
+.kamar-stat .num{font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--gold);line-height:1}
+.kamar-stat .lbl{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-top:4px}
+.komposisi-list{display:flex;flex-direction:column;gap:6px;margin-bottom:20px}
+.komposisi-row{display:flex;align-items:center;gap:10px;cursor:pointer;padding:8px 12px;background:var(--panel);border:1px solid var(--border);transition:all .2s}
+.komposisi-row:hover{border-color:var(--gold);background:rgba(201,168,76,.05)}
+.komposisi-row .k-label{flex:1;font-size:13px}
+.komposisi-row .k-count{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--gold);min-width:40px;text-align:right}
+.komposisi-row .k-bar{flex:2;height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+.komposisi-row .k-bar-fill{height:100%;background:var(--gold);border-radius:3px;transition:width .8s ease}
+.kamar-detail{background:var(--panel2);border:1px solid var(--border);padding:16px;margin-bottom:20px;display:none}
+.kamar-detail.show{display:block}
+.kamar-detail h4{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:2px;color:var(--gold);margin-bottom:12px}
+.kamar-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.kamar-card{background:var(--panel);border:1px solid var(--border);padding:14px}
+.kamar-card .kc-nama{font-size:13px;font-weight:600;margin-bottom:4px}
+.kamar-card .kc-seksi{font-size:11px;color:var(--muted);margin-bottom:8px}
+.kamar-card .kc-pax{font-size:11px;color:var(--text);background:var(--panel2);padding:6px 10px;border-radius:3px;line-height:1.8}
+.kamar-card .kc-badge{display:inline-block;font-size:10px;padding:2px 7px;border-radius:10px;font-weight:600;margin-right:4px;margin-top:4px}
+.badge-dewasa{background:rgba(41,128,185,.2);color:var(--blue)}
+.badge-anak-dewasa{background:rgba(142,68,173,.2);color:#c39bd3}
+.badge-anak{background:rgba(39,174,96,.2);color:var(--green)}
+.badge-balita{background:rgba(230,126,34,.2);color:var(--orange)}
+
+/* SHARING KAMAR */
+.sharing-section{margin-bottom:20px}
+.sharing-section h4{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:2px;color:var(--gold);background:var(--panel2);padding:8px 12px;margin-bottom:8px}
+.sharing-room{background:var(--panel);border:1px solid var(--border);padding:12px;margin-bottom:6px}
+.sharing-room .room-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.sharing-room .room-no{font-family:'Bebas Neue',sans-serif;font-size:14px;color:var(--gold)}
+.sharing-room .room-fill{font-size:11px;color:var(--muted)}
+.sharing-room .room-bar{height:4px;background:var(--border);border-radius:2px;overflow:hidden;margin-bottom:8px}
+.sharing-room .room-bar-fill{height:100%;background:var(--green);border-radius:2px;transition:width .8s}
+.sharing-person{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:12px}
+.sharing-person:last-child{border-bottom:none}
+.sharing-person .sp-nama{font-weight:500}
+.sharing-person .sp-sec{color:var(--muted);font-size:11px}
+
+/* BUS */
+.bus-overview{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:20px}
+.bus-stat{background:var(--panel);border:1px solid var(--border);border-top:3px solid var(--blue);padding:14px;text-align:center}
+.bus-stat .num{font-family:'Bebas Neue',monospace;font-size:32px;color:var(--blue);line-height:1;font-weight:700}
+.bus-stat .lbl{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-top:4px}
+.bus-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;margin-bottom:20px}
+.bus-card{background:var(--panel);border:1px solid var(--border);padding:16px}
+.bus-card .bc-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.bus-card .bc-title{font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--blue)}
+.bus-card .bc-pax{font-family:'DM Mono',monospace;font-size:13px;color:var(--text)}
+.bus-card .bc-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden;margin-bottom:12px}
+.bus-card .bc-fill{height:100%;border-radius:3px;transition:width .8s}
+.bus-section{margin-bottom:10px}
+.bus-section .bs-header{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--gold);padding:4px 0;border-bottom:1px solid var(--border);margin-bottom:6px}
+.bus-person{display:flex;justify-content:space-between;align-items:center;padding:3px 0;font-size:12px;border-bottom:1px solid rgba(255,255,255,.03)}
+.bus-person:last-child{border-bottom:none}
+.bus-person .bp-nama{font-weight:500}
+.bus-person .bp-pax{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted)}
 .spinner{width:30px;height:30px;border:3px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .load-txt{font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:3px;color:var(--muted)}
@@ -188,6 +250,9 @@ footer{text-align:center;padding:20px;color:var(--border);font-size:11px;letter-
     <button class="nav-tab" onclick="showPage('analisis',this)"><i class="fa fa-chart-bar"></i> Analisis</button>
     <button class="nav-tab" onclick="showPage('simulasi',this)"><i class="fa fa-sliders"></i> Simulasi</button>
     <button class="nav-tab" onclick="showPage('peserta',this)"><i class="fa fa-users"></i> Peserta</button>
+    <button class="nav-tab" onclick="showPage('realisasi',this)"><i class="fa fa-receipt"></i> Realisasi</button>
+    <button class="nav-tab" onclick="showPage('kamar',this)"><i class="fa fa-bed"></i> Kamar</button>
+    <button class="nav-tab" onclick="showPage('bus',this)"><i class="fa fa-bus"></i> Bus</button>
     <button class="nav-tab" onclick="showPage('budget',this)"><i class="fa fa-wallet"></i> Budget</button>
     <button class="nav-tab" onclick="showPage('vendor',this)"><i class="fa fa-handshake"></i> Vendor</button>
     <button class="nav-tab" onclick="showPage('itinerary',this)"><i class="fa fa-map-marked-alt"></i> Itinerary</button>
@@ -361,6 +426,8 @@ let D = {
   ],
   listPeserta: [],
   targetPeserta: 100,
+  kamar: {},
+  bus: {},
   lengan:[{model:'Pendek',jumlah:68},{model:'Panjang',jumlah:25}],
   transportasi:[{jenis:'Bus',jumlah:85},{jenis:'Kendaraan Sendiri',jumlah:13}],
   budget:[
@@ -439,6 +506,8 @@ async function loadData(){
     if(json.kaos?.length)         D.kaos=json.kaos;
     if(json.lengan?.length)       D.lengan=json.lengan;
     if(json.transportasi?.length) D.transportasi=json.transportasi;
+    if(json.kamar)                D.kamar=json.kamar;
+    if(json.bus)                  D.bus=json.bus;
     if(json.info)                 D.danaTersedia=toNum(json.info.dana_tersedia)||D.danaTersedia;
     if(json.info?.dana_tersedia) D.danaTersedia=parseFloat(String(json.info.dana_tersedia).replace(/[^0-9.-]/g,''))||D.danaTersedia;
     const now=new Date().toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'});
@@ -873,11 +942,196 @@ function exportExcel(){
   const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='tour_dashboard_fy2026.csv'; a.click();
 }
 
+
+// ── REALISASI ─────────────────────────────────────────────────
+function renderRealisasi(){
+  const items = D.budget || [];
+  const cats = [...new Set(items.map(d=>d.cat))];
+  const gi = items.reduce((s,d)=>s+d.qty*d.price,0);
+  const ga = items.reduce((s,d)=>s+toNum(d.actual),0);
+  const sisa = gi-ga, pct2 = gi>0?(ga/gi*100).toFixed(1):0;
+
+  document.getElementById('real-cards').innerHTML=`
+    <div class="card"><div class="c-label">Total Ideal</div><div class="c-val">${fmt(gi)}</div><div class="c-sub">Rencana anggaran</div></div>
+    <div class="card green"><div class="c-label">Total Realisasi</div><div class="c-val" style="color:var(--gold)">${fmt(ga)}</div><div class="c-sub">${pct2}% terserap</div><div class="pbar-bg"><div class="pbar-fill" style="width:${Math.min(pct2,100)}%;background:var(--gold)"></div></div></div>
+    <div class="card ${sisa>=0?'':'red'}"><div class="c-label">Sisa Anggaran</div><div class="c-val" style="color:${sisa>=0?'var(--green)':'var(--red)'}">${fmt(Math.abs(sisa))}</div><div class="c-sub">${sisa>=0?'Efisiensi':'Over budget'}</div></div>
+    <div class="card blue"><div class="c-label">Item Pending</div><div class="c-val">${items.filter(d=>!toNum(d.actual)).length}</div><div class="c-sub">Belum ada realisasi</div></div>`;
+
+  let h='';
+  cats.forEach(cat=>{
+    h+=`<tr class="cat-row"><td colspan="5">${cat}</td></tr>`;
+    items.filter(d=>d.cat===cat).forEach(d=>{
+      const ideal=d.qty*d.price, actual=toNum(d.actual), delta=ideal-actual;
+      const p=actual>0&&ideal>0?(actual/ideal*100).toFixed(1):null;
+      h+=`<tr>
+        <td>${d.item}</td>
+        <td class="tn">${fmt(ideal)}</td>
+        <td class="tn" style="${actual>0?'color:var(--gold)':'color:var(--muted)'}">${actual>0?fmt(actual):'&#8212;'}</td>
+        <td class="tn ${actual>0?(delta>=0?'dp':'dn'):'dz'}">${actual>0?(delta>=0?'+':'')+fmt(delta):'&#8212;'}</td>
+        <td>${p!==null?`<div style="display:flex;align-items:center;gap:8px">
+          <div class="pbar-bg" style="width:80px;display:inline-block"><div class="pbar-fill" style="width:${Math.min(parseFloat(p),100)}%;background:${parseFloat(p)>100?'var(--orange)':'var(--green)'}"></div></div>
+          <span style="font-size:11px;color:var(--muted)">${p}%</span></div>`:'<span style="color:var(--muted);font-size:11px">Pending</span>'}</td>
+      </tr>`;
+    });
+    const ci=items.filter(d=>d.cat===cat).reduce((s,d)=>s+d.qty*d.price,0);
+    const ca=items.filter(d=>d.cat===cat).reduce((s,d)=>s+toNum(d.actual),0),cd=ci-ca;
+    h+=`<tr class="tot-row"><td>Total ${cat}</td><td class="tn">${fmt(ci)}</td><td class="tn">${fmt(ca)}</td>
+      <td class="tn ${cd>=0?'dp':'dn'}">${cd>=0?'+':''}${fmt(cd)}</td>
+      <td><span class="pill ${ca/ci*100<=100?'pill-g':'pill-r'}">${ci>0?(ca/ci*100).toFixed(1):0}%</span></td></tr>`;
+  });
+  const totI=items.reduce((s,d)=>s+d.qty*d.price,0), totA=items.reduce((s,d)=>s+toNum(d.actual),0), totD=totI-totA;
+  h+=`<tr class="tot-row" style="background:rgba(201,168,76,.1)"><td><strong>GRAND TOTAL</strong></td>
+    <td class="tn">${fmt(totI)}</td><td class="tn" style="color:var(--gold)">${fmt(totA)}</td>
+    <td class="tn ${totD>=0?'dp':'dn'}">${totD>=0?'+':''}${fmt(totD)}</td>
+    <td><span class="pill ${totA/totI*100<=100?'pill-g':'pill-r'}">${totI>0?(totA/totI*100).toFixed(1):0}%</span></td></tr>`;
+  document.getElementById('real-tbl').innerHTML=h;
+}
+
+// ── KAMAR ─────────────────────────────────────────────────────
+function renderKamar(){
+  const km = D.kamar || {};
+  if(!km.totalKamar){ document.getElementById('kamar-summary').innerHTML='<div style="color:var(--muted);padding:20px">Data kamar belum tersedia</div>'; return; }
+
+  // Summary cards
+  document.getElementById('kamar-summary').innerHTML=`
+    <div class="kamar-stat"><div class="num">${km.totalKamar}</div><div class="lbl">Total Kamar</div></div>
+    <div class="kamar-stat"><div class="num" style="color:var(--blue)">${km.totalKamarKeluarga}</div><div class="lbl">Kamar Keluarga</div></div>
+    <div class="kamar-stat"><div class="num" style="color:var(--green)">${km.totalKamarSharing}</div><div class="lbl">Kamar Sharing</div></div>
+    <div class="kamar-stat"><div class="num" style="color:var(--orange)">${km.totalKamarSolo}</div><div class="lbl">Kamar Solo</div></div>`;
+
+  // Insight anak
+  const sm = D.summary || {};
+  document.getElementById('kamar-insight').innerHTML=`
+    <h3><i class="fa fa-lightbulb"></i> Estimasi Kebutuhan Kamar (Berdasarkan Usia Anak)</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin-bottom:12px">
+      <div style="text-align:center;padding:12px;background:rgba(39,174,96,.08);border:1px solid rgba(39,174,96,.2);border-radius:4px">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--green)">${km.totalKamarKeluarga}</div>
+        <div style="font-size:11px;color:var(--muted)">Kamar Keluarga</div>
+      </div>
+      <div style="text-align:center;padding:12px;background:rgba(230,126,34,.08);border:1px solid rgba(230,126,34,.2);border-radius:4px">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--orange)">${km.totalKamarSharing}</div>
+        <div style="font-size:11px;color:var(--muted)">Kamar Sharing</div>
+      </div>
+      <div style="text-align:center;padding:12px;background:rgba(231,76,60,.08);border:1px solid rgba(231,76,60,.2);border-radius:4px">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--red)">${km.totalKamarSolo}</div>
+        <div style="font-size:11px;color:var(--muted)">Kamar Solo</div>
+      </div>
+    </div>
+    <ul class="insight-list">
+      <li>Anak ≥12th dihitung sebagai dewasa (butuh tempat tidur sendiri). <strong style="color:var(--gold)">${sm.anakDewasa||0} anak dewasa</strong> terdeteksi.</li>
+      <li>Komposisi pax: <strong>${sm.totalDewasa||0} dewasa</strong> · <strong>${sm.anakDewasa||0} anak dewasa</strong> · <strong>${sm.anakBesar||0} anak 5-11th</strong> · <strong>${sm.anakKecil||0} balita &lt;5th</strong></li>
+    </ul>`;
+
+  // Komposisi keluarga
+  const maxK = Math.max(...(km.komposisiRekap||[]).map(k=>k.jumlah),1);
+  document.getElementById('komposisi-list').innerHTML=(km.komposisiRekap||[]).map(k=>`
+    <div class="komposisi-row" onclick="showKamarDetail('${k.komposisi}')">
+      <div class="k-label">${k.komposisi}</div>
+      <div class="k-bar"><div class="k-bar-fill" style="width:${(k.jumlah/maxK*100).toFixed(0)}%"></div></div>
+      <div class="k-count">${k.jumlah}</div>
+    </div>`).join('');
+
+  // Kamar Solo
+  const soloHtml = (km.kamarSolo||[]).length === 0
+    ? '<div style="color:var(--muted);font-size:13px;padding:12px">Tidak ada kamar solo</div>'
+    : (km.kamarSolo||[]).map(k=>`
+      <div class="sharing-room">
+        <div class="sharing-person">
+          <span class="sp-nama">${k.isi[0]?.nama||'—'}</span>
+          <span class="sp-sec">${k.isi[0]?.seksi||'—'}</span>
+        </div>
+      </div>`).join('');
+  document.getElementById('kamar-solo-wrap').innerHTML=`
+    <div class="sharing-section"><div class="sharing-section"><div style="color:var(--muted);font-size:12px;margin-bottom:8px">${km.kamarSolo?.length||0} kamar solo</div>${soloHtml}</div></div>`;
+
+  // Kamar Sharing
+  const secMap2 = {};
+  (km.kamarSharing||[]).forEach(k=>{ if(!secMap2[k.section]) secMap2[k.section]=[]; secMap2[k.section].push(k); });
+  document.getElementById('kamar-sharing-wrap').innerHTML=Object.entries(secMap2).map(([sec,rooms])=>`
+    <div class="sharing-section">
+      <h4>${sec}</h4>
+      ${rooms.map((r,i)=>`
+        <div class="sharing-room">
+          <div class="room-header">
+            <span class="room-no">Kamar ${i+1}</span>
+            <span class="room-fill">${r.isi.length}/4 terisi</span>
+          </div>
+          <div class="room-bar"><div class="room-bar-fill" style="width:${r.isi.length/4*100}%"></div></div>
+          ${r.isi.map((p,n)=>`<div class="sharing-person"><span>${n+1}. <span class="sp-nama">${p.nama}</span></span><span class="sp-sec">${p.seksi}</span></div>`).join('')}
+        </div>`).join('')}
+    </div>`).join('');
+}
+
+function showKamarDetail(komposisi){
+  const km = D.kamar || {};
+  const detail = document.getElementById('kamar-detail');
+  const filtered = (km.kamarKeluarga||[]).filter(k=>k.komposisi===komposisi||k.komposisi.startsWith(komposisi.split(' + ')[0]));
+
+  document.getElementById('kamar-detail-title').textContent = `Detail — ${komposisi} (${filtered.length} keluarga)`;
+  document.getElementById('kamar-detail-cards').innerHTML = filtered.map(k=>`
+    <div class="kamar-card">
+      <div class="kc-nama">${k.nama}</div>
+      <div class="kc-seksi">${k.seksi}</div>
+      <div class="kc-pax">
+        ${k.namaIstri?`👩 Istri: ${k.namaIstri}<br>`:''}
+        <strong>${k.totalPax} pax · ${k.jumlahKamar} kamar</strong><br>
+        ${k.anakList.map(a=>`${a.nama} (${a.usia}th)`).join(' · ')||'Tanpa anak'}
+      </div>
+      <div style="margin-top:8px">
+        <span class="kc-badge badge-dewasa">${k.dewasa} Dewasa</span>
+        ${k.anakDewasa>0?`<span class="kc-badge badge-anak-dewasa">${k.anakDewasa} Anak Dewasa ≥12th</span>`:''}
+        ${k.anakList.filter(a=>a.usia>=5&&a.usia<12).length>0?`<span class="kc-badge badge-anak">${k.anakList.filter(a=>a.usia>=5&&a.usia<12).length} Anak 5-11th</span>`:''}
+        ${k.anakList.filter(a=>a.usia<5).length>0?`<span class="kc-badge badge-balita">${k.anakList.filter(a=>a.usia<5).length} Balita &lt;5th</span>`:''}
+      </div>
+    </div>`).join('');
+
+  detail.classList.add('show');
+  detail.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// ── BUS ───────────────────────────────────────────────────────
+function renderBus(){
+  const bs = D.bus || {};
+  if(!bs.jumlahBus){ document.getElementById('bus-overview').innerHTML='<div style="color:var(--muted);padding:20px">Data bus belum tersedia</div>'; return; }
+
+  document.getElementById('bus-overview').innerHTML=`
+    <div class="bus-stat"><div class="num">${bs.jumlahBus}</div><div class="lbl">Bus Dibutuhkan</div></div>
+    <div class="bus-stat"><div class="num">${bs.totalNaikBus}</div><div class="lbl">Peserta Naik Bus</div></div>
+    <div class="bus-stat"><div class="num">${bs.totalPaxBus}</div><div class="lbl">Total Pax Bus</div></div>
+    <div class="bus-stat"><div class="num">${bs.kapasitasPerBus}</div><div class="lbl">Kursi / Bus</div></div>
+    <div class="bus-stat"><div class="num" style="color:var(--green)">${bs.jumlahBus*bs.kapasitasPerBus-bs.totalPaxBus}</div><div class="lbl">Kursi Kosong</div></div>
+    <div class="bus-stat"><div class="num" style="color:${bs.totalPaxBus/bs.jumlahBus/bs.kapasitasPerBus>=.9?'var(--red)':'var(--orange)'}">${bs.jumlahBus>0?Math.round(bs.totalPaxBus/bs.jumlahBus/bs.kapasitasPerBus*100):0}%</div><div class="lbl">Occupancy</div></div>`;
+
+  document.getElementById('bus-cards').innerHTML=(bs.buses||[]).map(b=>{
+    const fill = b.totalPax/bs.kapasitasPerBus;
+    const secMap3 = {};
+    b.peserta.forEach(p=>{ if(!secMap3[p.seksi]) secMap3[p.seksi]=[]; secMap3[p.seksi].push(p); });
+    return `<div class="bus-card">
+      <div class="bc-header">
+        <div class="bc-title">🚌 Bus ${b.no}</div>
+        <div class="bc-pax">${b.totalPax}/${bs.kapasitasPerBus} kursi</div>
+      </div>
+      <div class="bc-bar"><div class="bc-fill" style="width:${Math.min(fill*100,100).toFixed(0)}%;background:${fill>=1?'var(--red)':fill>=.8?'var(--orange)':'var(--green)'}"></div></div>
+      ${Object.entries(secMap3).map(([sec,peserta])=>`
+        <div class="bus-section">
+          <div class="bs-header">${sec} (${peserta.reduce((s,p)=>s+p.totalPax,0)} pax)</div>
+          ${peserta.map(p=>`<div class="bus-person">
+            <span class="bp-nama">${p.nama}</span>
+            <span class="bp-pax">${p.dewasa}D${p.anak>0?'+'+p.anak+'A':''} = ${p.totalPax}pax</span>
+          </div>`).join('')}
+        </div>`).join('')}
+    </div>`;
+  }).join('');
+}
+
 // ── INIT ─────────────────────────────────────────────────────
 function renderAll(){
   renderOverview();
   renderAnalisis();
   renderPeserta();
+  renderRealisasi();
+  renderKamar();
+  renderBus();
   renderBudget();
   renderVendor();
   renderItinerary();
@@ -887,5 +1141,42 @@ function renderAll(){
 setInterval(renderCountdown,1000);
 loadData();
 </script>
+
+<!-- REALISASI PAGE -->
+<div class="page" id="page-realisasi">
+  <div class="sec-title"><i class="fa fa-receipt"></i> Realisasi Aktual</div>
+  <div class="cards" id="real-cards"></div>
+  <div class="tbl-wrap"><table class="real-tbl">
+    <thead><tr><th>Item</th><th class="tn">Ideal</th><th class="tn">Aktual</th><th class="tn">Selisih</th><th>% Serap</th></tr></thead>
+    <tbody id="real-tbl"></tbody>
+  </table></div>
+</div>
+
+<!-- KAMAR PAGE -->
+<div class="page" id="page-kamar">
+  <div class="sec-title"><i class="fa fa-bed"></i> Manajemen Kamar</div>
+  <div class="kamar-summary" id="kamar-summary"></div>
+  <div class="insight-box" style="margin-bottom:20px" id="kamar-insight"></div>
+  <div class="sec-title" style="font-size:17px;margin-bottom:12px"><i class="fa fa-users"></i> Komposisi Keluarga <small style="font-size:12px;color:var(--muted);font-family:'DM Sans';letter-spacing:0;font-weight:normal">(klik untuk lihat detail)</small></div>
+  <div class="komposisi-list" id="komposisi-list"></div>
+  <div class="kamar-detail" id="kamar-detail">
+    <h4 id="kamar-detail-title">Detail Kamar</h4>
+    <div class="kamar-cards" id="kamar-detail-cards"></div>
+  </div>
+  <div class="sec-title" style="font-size:17px;margin-bottom:12px;margin-top:20px"><i class="fa fa-user"></i> Kamar Solo</div>
+  <div id="kamar-solo-wrap"></div>
+  <div class="sec-title" style="font-size:17px;margin-bottom:12px;margin-top:20px"><i class="fa fa-user-friends"></i> Kamar Sharing</div>
+  <div id="kamar-sharing-wrap"></div>
+</div>
+
+<!-- BUS PAGE -->
+<div class="page" id="page-bus">
+  <div class="sec-title"><i class="fa fa-bus"></i> Manajemen Bus</div>
+  <div class="bus-overview" id="bus-overview"></div>
+  <div class="sec-title" style="font-size:17px;margin-bottom:12px"><i class="fa fa-list"></i> Daftar Penumpang per Bus</div>
+  <div class="bus-cards" id="bus-cards"></div>
+</div>
+
+<footer>Tour Dashboard FY2026 &middot; Plant Administration Division &middot; Manufacturing &amp; PE Directorate</footer>
 </body>
 </html>
